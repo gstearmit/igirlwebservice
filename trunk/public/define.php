@@ -3,11 +3,11 @@
 	
 	chdir(dirname(__DIR__));
 
-	define('APPLICATION_PATH', realpath(dirname(__DIR__)));	
+	define('APPLICATION_PATH23', realpath(dirname(__DIR__)));	
 	
 
-	define('LIBRARY_PATH', realpath(APPLICATION_PATH . '/library/'));
-	define('PUBLIC_PATH'	, realpath(APPLICATION_PATH . '/public'));
+	define('LIBRARY_PATH', realpath(APPLICATION_PATH23 . '/library/'));
+	define('PUBLIC_PATH'	, realpath(APPLICATION_PATH23 . '/public'));
 	define('TEMPLATE_PATH'	, realpath(PUBLIC_PATH . '/templates'));
 	define('Editorapp_PATH'	, realpath(PUBLIC_PATH . '/editorapp'));
 	define('Appeditor_PATH'	, realpath(PUBLIC_PATH . '/appeditor'));

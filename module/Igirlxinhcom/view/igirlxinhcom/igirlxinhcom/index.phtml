@@ -1,0 +1,32 @@
+<?php 
+$title = 'My igirlxinhcoms';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p><a href="<?php echo $this->url('igirlxinhcom', array( 
+        'action'=>'add'));?>">Add new igirlxinhcom</a></p>
+
+<table class="table">
+<tr>
+    <th>Title</th>
+    <th>Artist</th>
+    <th>&nbsp;</th>
+</tr>
+<?php foreach($paginator as $igirlxinhcom) : ?>
+<tr>
+    <td><?php echo $this->escapeHtml($igirlxinhcom->title);?></td>
+    <td><?php echo $this->escapeHtml($igirlxinhcom->artist);?></td>
+    <td>
+        <a href="<?php echo $this->url('igirlxinhcom',
+            array('action'=>'edit', 'id' => $igirlxinhcom->id));?>">Edit</a>
+        <a href="<?php echo $this->url('igirlxinhcom',
+            array('action'=>'delete', 'id' => $igirlxinhcom->id));?>">Delete</a>
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>
+<?php 
+echo $this->paginationControl(
+            $paginator, 'Sliding', 'paginator-igirlxinhcom', array('order_by' => $order_by, 'order' => $order)
+    );
+?>

@@ -102,11 +102,11 @@ class IgirlxinhcomTable extends AbstractTableGateway
     
     
     //fetch_All_Apphaivltv_Rest_Orderbyiddesc
-    public function fetch_All_Apphaivltv_Rest_Orderbyiddesc(Select $select = null) {
+    public function fetch_All_Igirlxinhcomrest_Rest_Orderbyiddesc(Select $select = null) {
     	if (null === $select)
     		$select = new Select();
     	$select->from('appsatellite');
-    	$select->where(array('appsatellite.nameapp = \'haivltv\''));
+    	$select->where(array('appsatellite.nameapp = \'igirlxinhcom\''));
     	$select->order('id DESC');
     	$resultSet = $this->selectWith($select);
     	//return $resultSet;die;

@@ -572,6 +572,7 @@ class IgirlxinhcomController extends AbstractActionController {
 		$igirlxinhcom = array (
 				'nameapp' => $nameapp,
 				'title' => "",
+				'link' => "",
 				'items' => array ()
 		);
 		
@@ -584,10 +585,9 @@ class IgirlxinhcomController extends AbstractActionController {
 			$tmptitle = array();$tmplink = array();
 			$aelement = $r->getElementsByTagName ( "a" )->item (0);
 			if ($aelement->hasAttributes ()) {
-				$igirlxinhcom ['items'][$i]->id =  $i;
-				$igirlxinhcom ['items'][$i]->title =  $aelement->getAttribute ( 'title' );
-				$igirlxinhcom ['items'][$i]->img_thumbnail  = $aelement->getAttributeNode('href')->nodeValue;
-				//$igirlxinhcom ['items'][$i]->detail = array();
+				//$igirlxinhcom ['items'][$i]->id =  $i;
+				$igirlxinhcom ['items'][$i]->content_detail =  $aelement->getAttribute ( 'title' );
+				$igirlxinhcom ['items'][$i]->image_thumbnail  = $aelement->getAttributeNode('href')->nodeValue;
 				$i++;
 			}
 		}
@@ -596,7 +596,7 @@ class IgirlxinhcomController extends AbstractActionController {
 		$get_chap = $dom->execute ( '#container #content .post-thumb' );
 		$i= 0;
 		foreach ( $get_chap as $keyim =>$valuediv ) {
-			$igirlxinhcom ['items'][$i]->detail = $this->innerHTML($valuediv);
+			$igirlxinhcom ['items'][$i]->content_detail_full = $this->innerHTML($valuediv);
 			$i++;
 		}
 		
@@ -604,7 +604,7 @@ class IgirlxinhcomController extends AbstractActionController {
 // 		echo '<pre>';
 // 		print_r ($igirlxinhcom);
 // 		echo '</pre>';
-// 		die ();
+		//die ();
 
 		// Lưu tin đã lấy vào file cache
 		$path = APPLICATION_PATH23 . '/cache/igirlxinhcomget.cache.php';
@@ -614,7 +614,7 @@ class IgirlxinhcomController extends AbstractActionController {
 		fclose ( $handler );
 	
 		
-// 		die ();
+ 		//die ();
 		
 		
 		
@@ -660,15 +660,23 @@ class IgirlxinhcomController extends AbstractActionController {
 // 		echo '</pre>';
 // 		die ();
 		
-		// // save
-		// foreach ($haivltv as $keysave =>$valuehaivlSave)
-		// {
-		// $arry_tmp = array();
-		// $arry_tmp = (array)$valuehaivlSave;
-		// $rssget = New Rssget();
-		// $rssget->exchangeArray($arry_tmp);
-		// $this->getRssgetTable()->saveRssget($rssget);
-		// }
+		// save
+		foreach ($igirlxinhcom as $keysave )
+		{
+			$nameppp = $igirlxinhcom['nameapp'];
+			$titlep  = $igirlxinhcom['title'];
+			$linkp =   $igirlxinhcom['link'];
+			
+			foreach ($igirlxinhcom['items'] as $lkey => $lvalue)
+			{
+				$atrrytmp = array();
+				$atrrytmp = (array)$lvalue;
+				$igirl = New Igirlxinhcom();
+				$igirl->exchangeArrayigril($atrrytmp,$nameppp,$titlep,$linkp);
+				$this->getigirlxinhcomTable()->saveIgirlxinhcom($igirl);
+			}
+			
+		}
 		
 		return new JsonModel ( array (
 				'data' => $igirlxinhcom 
@@ -688,6 +696,161 @@ class IgirlxinhcomController extends AbstractActionController {
 				'data' => $data_array_cahe
 		) );
 	}
+	
+	
+	public function phototamtayvngetAction() 
+	{
+		$domain = "http://photo.tamtay.vn";
+		$url_haivltv = "http://photo.tamtay.vn";
+		$client = new HttpClient ();
+		$client->setAdapter ( 'Zend\Http\Client\Adapter\Curl' );
+		$response = $this->getResponse ();
+		$response->getHeaders ()->addHeaderLine ( 'content-type', 'text/html; charset=utf-8' ); // set content-type
+		$client->setUri ( $url_haivltv );
+		$result = $client->send ();
+		$body = $result->getBody (); // content of the web
+		// echo $body;die;
+		$dom = new Query ( $body );
+		// get img 
+		$linkarr = $dom->execute ( '.body .photoPage .site-wrap .item .img' );
+		//var_dump($imgarr->count());die;
+		if($linkarr->count() > 0 ) { $continue  = true;}else {$continue = false;}
+		if ($continue === false) { print "Not get Data "; exit(); }
+		$nameapp = 'phototamtayvn';
+		$phototamtayvn = array (
+				'nameapp' => $nameapp,
+				'title' => $nameapp,
+				'link' => $domain,
+				'items' => array ()
+		);
+	
+	
+		$phototamtayvn ['items'][] = array ();
+		$arrayLoop_link = array();
+		$i = 0;
+		$titles = array();$links = array();
+		foreach ( $linkarr as $key => $r ) {
+			$tmptitle = array();$tmplink = array();
+			$aelement = $r->getElementsByTagName ( "a" )->item (0);
+			if ($aelement->hasAttributes ()) {
+				$linktmpkk = $domain.$aelement->getAttributeNode('href')->nodeValue;
+				$phototamtayvn ['items'][$i]->link  = $linktmpkk;
+				//$array_tmp_content_full =  $this->getContentImgFull($linktmpkk); // get array all img
+				$array_tmp_content_full =  $this->getContentinnerdiv($linktmpkk);
+				$phototamtayvn ['items'][$i]->content_detail_full = $array_tmp_content_full;
+				$i++;
+			}
+		}
+		
+		// get img decription
+		$imgarray = $dom->execute ( '.body .photoPage .site-wrap .item .img img' );
+		$i = 0;
+		foreach ( $imgarray as $key => $r ) {
+			if ($r->hasAttributes())
+			{
+				$phototamtayvn ['items'][$i]->image_thumbnail =  $r->getAttributeNode( 'src' )->nodeValue;
+			    $i++;
+			}
+		}	
+
+		// get img decription
+		$titlearr = $dom->execute ( '.body .photoPage .site-wrap .item .infoAlbum .titleAlbum h3' );
+		$i = 0;
+		foreach ( $titlearr as $key => $r ) {
+			$aelement = $r->getElementsByTagName ( "a" )->item (0);
+			if ($aelement->hasAttributes ()) {
+				$phototamtayvn ['items'][$i]->content_detail = $aelement->textContent;;
+			    $i++;
+			}
+				
+		}
+	
+		
+	
+		// 		echo "--------------------------------------</br>";
+		// 		echo '<pre>';
+		// 		print_r ($phototamtayvn);
+		// 		echo '</pre>';
+		//die ();
+	
+		// Lưu tin đã lấy vào file cache
+		$path = APPLICATION_PATH23 . '/cache/phototamtayvnget.cache.php';
+		$content = '<?php $phototamtayvn = ' . var_export ( $phototamtayvn, true ) . ';?>';
+		$handler = fopen ( $path, 'w+' );
+		fwrite ( $handler, $content );
+		fclose ( $handler );
+	
+	
+		//die ();
+	
+	
+	
+	
+	
+		// 		// copy anh
+		// 		$arrayimgConvert = array ();
+		// 		// save img
+		// 		$dir_file = DIR_UPLOAD_NEW; // $dir_file.'/uploadnew';
+		// 		$folder = DIR_UPLOAD_NEW;
+		// 		// $keyham['neochap'] : 'cuu-dinh-ky-chapter-11_';
+	
+		// 		foreach ( $phototamtayvn ['items'] as $keyham ) {
+			
+		// 			if (! empty ( $keyham ['detail'] )) {
+		// 				foreach ( $keyham ['detail'] as $keyhamvalue => $getvalue_link ) {
+		// 					$sour = pathinfo ( $getvalue_link );
+		// 					// Thư mục chứa ảnh
+		// 					if (file_exists ( $folder . '/' . $keyham ['neochap'] . $sour ['basename'] )) {
+		// 						$dest = $folder . '/' . time () . '_' . $keyham ['neochap'] . $sour ['basename'];
+		// 						$dest_img = time () . '_' . $keyham ['neochap'] . $sour ['basename'];
+		// 					} else {
+		// 						$dest = $folder . '/' . $keyham ['neochap'] . $sour ['basename'];
+		// 						$dest_img = $keyham ['neochap'] . $sour ['basename'];
+		// 					}
+			
+		// 					$tmp_convert = array ();
+		// 					$tmp_convert = $dest_img;
+		// 					$arrayimgConvert [] = $tmp_convert;
+			
+		// 					// save img in dir uploadnews
+		// 					$this->save_img ( $getvalue_link, $dest );
+			
+		// 					// break;
+		// 				}
+		// 			} elseif (empty ( $keyham ['detail'] ) and is_array ( $keyham ['detail'] )) {
+		// 				break; // ngat de chuyen next
+		// 			}
+		// 		}
+	
+		// 		echo '<pre>';
+		// 		print_r ( $arrayimgConvert );
+		// 		echo '</pre>';
+		// 		die ();
+	
+		// save
+		foreach ($phototamtayvn as $keysave )
+		{
+			$nameppp = $phototamtayvn['nameapp'];
+			$titlep  = $phototamtayvn['title'];
+			$linkp =   $phototamtayvn['link'];
+				
+			foreach ($phototamtayvn['items'] as $lkey => $lvalue)
+			{
+				$atrrytmp = array();
+				$atrrytmp = (array)$lvalue;
+				$igirl = New Igirlxinhcom();
+				$igirl->exchangeArrayigril($atrrytmp,$nameppp,$titlep,$linkp);
+				$this->getigirlxinhcomTable()->saveIgirlxinhcom($igirl);
+			}
+				
+		}
+	
+		return new JsonModel ( array (
+				'data' => $phototamtayvn
+		) );
+	}
+	
+	
 	
 	// get item file cahe
 	public function get_hamtruyen() {
@@ -760,10 +923,10 @@ class IgirlxinhcomController extends AbstractActionController {
 				foreach ( $igirlxinhcom ['items'] as $keyloop ) 
 				{
 					
-					$data['items'][$i]->id =  $keyloop ['id'];
-					$data['items'][$i]->title =  $keyloop ['title'];
-					$data['items'][$i]->img_thumbnail  =  $keyloop ['img_thumbnail'];
-					$data['items'][$i]->detail  =  $keyloop ['detail'];
+					//$data['items'][$i]->id =  $keyloop ['id'];
+					$data['items'][$i]->content_detail =  $keyloop ['title'];
+					$data['items'][$i]->image_thumbnail  =  $keyloop ['image_thumbnail'];
+					$data['items'][$i]->content_detail_full  =  $keyloop ['detail'];
 					$i++;	
 				
 				}
@@ -861,7 +1024,8 @@ class IgirlxinhcomController extends AbstractActionController {
 	}
 	
 	// Return : array link goc truyen
-	public function getContent_chap_img($url = null) {
+	public function getContent_chap_img($url = null) 
+	{
 		// get Content
 		if ($url === null) {
 			return $array_img = null;
@@ -886,6 +1050,74 @@ class IgirlxinhcomController extends AbstractActionController {
 				$array_img [] = $key->getAttribute ( 'src' );
 			}
 			
+			return $array_img;
+		}
+	}
+	
+	//GetContentImgFull
+	public function getContentImgFull($url = null)
+	{
+		
+		// get Content
+		if ($url === null) {
+			return $array_img = null;
+		} else {
+			$client2 = new HttpClient ();
+			$client2->setAdapter ( 'Zend\Http\Client\Adapter\Curl' );
+				
+			$response2 = $this->getResponse ();
+			$response2->getHeaders ()->addHeaderLine ( 'content-type', 'text/html; charset=utf-8' ); // set content-type
+				
+			$client2->setUri ( $url );
+			$result2 = $client2->send ();
+			$body2 = $result2->getBody (); // content of the web
+			// return $body2; die;
+			// echo $body2;
+			$dom2 = new Query ( $body2 );
+			// get img detail story
+			$img_array = $dom2->execute ( '.photoPage .site-wrap3 .containerLeft .imgDetailArticle img.image_tag' );
+			//return $img_array->count();
+			$array_img = array ();
+			// $array_img[] = $img_array->current()->getAttribute('src');;
+			foreach ( $img_array as $key => $r ) {
+				$array_img [] = $r->getAttributeNode( 'src' )->nodeValue; //getAttribute ( 'src' ) 
+			}
+				
+
+			
+			return $array_img;
+		}
+	}
+	
+	// get div
+	public function getContentinnerdiv($url = null)
+	{
+	
+		// get Content
+		if ($url === null) {
+			return $array_img = null;
+		} else {
+			$client2 = new HttpClient ();
+			$client2->setAdapter ( 'Zend\Http\Client\Adapter\Curl' );
+	
+			$response2 = $this->getResponse ();
+			$response2->getHeaders ()->addHeaderLine ( 'content-type', 'text/html; charset=utf-8' ); // set content-type
+	
+			$client2->setUri ( $url );
+			$result2 = $client2->send ();
+			$body2 = $result2->getBody (); // content of the web
+			// return $body2; die;
+			// echo $body2;
+			$dom2 = new Query ( $body2 );
+			// get img detail story
+			$img_array = $dom2->execute ( '.photoPage .site-wrap3 .containerLeft .imgDetailArticle' );
+			//return $img_array->count();
+			$array_img = array ();
+			// $array_img[] = $img_array->current()->getAttribute('src');;
+			foreach ( $img_array as $key ) {
+				$array_img [] = $this->innerHTML($key);
+			}
+	
 			return $array_img;
 		}
 	}

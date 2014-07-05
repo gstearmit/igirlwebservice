@@ -36,7 +36,21 @@ class Igirlxinhcom implements InputFilterAwareInterface
         $this->extend  = (isset($data['extend'])) ? $data['extend'] : null;
 
     }
-
+    
+    
+    public function exchangeArrayigril($data,$nameppp,$titlep,$linkp)
+    {
+    	$this->id     = (isset($data['id'])) ? $data['id'] : null;
+    	$this->nameapp = $nameppp;
+    	$this->title  = $titlep;
+    	$this->link  = $linkp;
+    	$this->image_thumbnail  = (isset($data['image_thumbnail'])) ? $data['image_thumbnail'] : null;
+    	$this->content_detail  = (isset($data['content_detail'])) ? $data['content_detail'] : null;
+    	$this->content_detail_full  = (isset($data['content_detail_full'])) ? $data['content_detail_full'] : null;
+    	$this->extend  = (isset($data['extend'])) ? $data['extend'] : null;
+    
+    }
+    
     public function getArrayCopy()
     {
         return get_object_vars($this);

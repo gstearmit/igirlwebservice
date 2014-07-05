@@ -78,6 +78,7 @@ return array(
     	'Hamtruyencom',
     	'Chapter',
 		'Igirlxinhcom',
+		'Igirlxinhcomrest',
 		
 		
     ),

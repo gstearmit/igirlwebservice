@@ -735,8 +735,8 @@ class IgirlxinhcomController extends AbstractActionController {
 			if ($aelement->hasAttributes ()) {
 				$linktmpkk = $domain.$aelement->getAttributeNode('href')->nodeValue;
 				$phototamtayvn ['items'][$i]->link  = $linktmpkk;
-				//$array_tmp_content_full =  $this->getContentImgFull($linktmpkk); // get array all img
-				$array_tmp_content_full =  $this->getContentinnerdiv($linktmpkk);
+				$array_tmp_content_full =  $this->getContentImgFull($linktmpkk); // get array all img
+				//$array_tmp_content_full =  $this->getContentinnerdiv($linktmpkk); // chuan roi
 				$phototamtayvn ['items'][$i]->content_detail_full = $array_tmp_content_full;
 				$i++;
 			}
@@ -827,6 +827,7 @@ class IgirlxinhcomController extends AbstractActionController {
 		// 		echo '</pre>';
 		// 		die ();
 	
+		//echo "---------------------------------------------------</br>";
 		// save
 		foreach ($phototamtayvn as $keysave )
 		{
@@ -838,13 +839,46 @@ class IgirlxinhcomController extends AbstractActionController {
 			{
 				$atrrytmp = array();
 				$atrrytmp = (array)$lvalue;
+				
 				$igirl = New Igirlxinhcom();
 				$igirl->exchangeArrayigril($atrrytmp,$nameppp,$titlep,$linkp);
-				$this->getigirlxinhcomTable()->saveIgirlxinhcom($igirl);
+				$id_tamtay = $this->getigirlxinhcomTable()->saveIgirlxinhcom($igirl);
+				
+				//var_dump($id_tamtay);
+				
+				
+				// save 1-n field content_detail_full in table content_detail_full
+				   $arrject = (array)$lvalue->content_detail_full; // Oject
+				   if (is_array($arrject) and !empty($arrject))
+				   {
+				   	
+				   	$returnResult = $this->getigirlxinhcomTable()->saveContent_detail_full($arrject,$id_tamtay);
+				   	
+				   	if($returnResult === 1)
+				   	{
+				   		
+				   	}else {
+				   		die('Oop! Error .Not Save detail . Please try again');
+				   	
+				   	}
+				   
+				   	
+// 				   	    echo "zzzzxzxz --- </br>";
+// 					   	echo '<pre>';
+// 					   //	print_r($lvalue->content_detail_full);
+// 					   print_r($arrject);
+// 					   	echo '</pre>';
+// 					   	echo '------------</br>';
+				   }
+				
+				//break;
 			}
 				
 		}
 	
+		//die;
+		
+		
 		return new JsonModel ( array (
 				'data' => $phototamtayvn
 		) );
@@ -1075,12 +1109,11 @@ class IgirlxinhcomController extends AbstractActionController {
 			// echo $body2;
 			$dom2 = new Query ( $body2 );
 			// get img detail story
-			$img_array = $dom2->execute ( '.photoPage .site-wrap3 .containerLeft .imgDetailArticle img.image_tag' );
-			//return $img_array->count();
+			$img_array23 = $dom2->execute ( '.photoPage .site-wrap3 .containerLeft .imgDetailArticle .t_center img.image_tag' );
+			//$img_array23 = $dom2->execute ( '.photoPage .site-wrap3 .containerLeft .imgDetailArticle .t_center img' );
 			$array_img = array ();
-			// $array_img[] = $img_array->current()->getAttribute('src');;
-			foreach ( $img_array as $key => $r ) {
-				$array_img [] = $r->getAttributeNode( 'src' )->nodeValue; //getAttribute ( 'src' ) 
+			foreach ( $img_array23 as $key245 ) {
+				$array_img [] = $key245->getAttribute('data-original');
 			}
 				
 
@@ -1089,7 +1122,7 @@ class IgirlxinhcomController extends AbstractActionController {
 		}
 	}
 	
-	// get div
+	// get inner div
 	public function getContentinnerdiv($url = null)
 	{
 	
@@ -1115,7 +1148,7 @@ class IgirlxinhcomController extends AbstractActionController {
 			$array_img = array ();
 			// $array_img[] = $img_array->current()->getAttribute('src');;
 			foreach ( $img_array as $key ) {
-				$array_img [] = $this->innerHTML($key);
+				$array_img = $this->innerHTML($key);
 			}
 	
 			return $array_img;

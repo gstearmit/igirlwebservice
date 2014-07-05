@@ -120,8 +120,6 @@ class CatalogueTable extends AbstractTableGateway {
     public function getRestCatalogueNewsReport($id)
      {
     	
-    	//die("die o dađê lam tiep ");
-    	
     	$id = (int) $id;
     	$sql = new Sql($this->adapter);
     	$select = $sql->select();

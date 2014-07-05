@@ -79,6 +79,7 @@ return array(
     	'Chapter',
 		'Igirlxinhcom',
 		'Igirlxinhcomrest',
+		'Phototamtayvnrest',
 		
 		
     ),

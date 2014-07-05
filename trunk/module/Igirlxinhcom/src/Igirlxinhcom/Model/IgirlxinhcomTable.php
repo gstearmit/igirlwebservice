@@ -6,6 +6,8 @@ use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
+use Zend\Db\Sql\Sql;
+use Zend\Db\Sql\Where;
 
 class IgirlxinhcomTable extends AbstractTableGateway
 {
@@ -46,7 +48,36 @@ class IgirlxinhcomTable extends AbstractTableGateway
         }
         return $row;
     }
-
+    
+   
+    
+    public function getPhototamtayvn($id)
+    {
+    	
+    	$id = (int) $id;
+    	$sql = new Sql($this->adapter);
+    	$select = $sql->select();
+    	$select->columns(array('src'=>'src')); //,'idforeign'=>'idforeign'
+    	$select->from ('contentdetailfull')
+    	       ->join('appsatellite', 'contentdetailfull.idforeign= appsatellite.id',array()); //array('id'=>'id','nameapp'=>'nameapp','title'=>'title','link'=>'link','image_thumbnail'=>'image_thumbnail','content_detail'=>'content_detail','content_detail_full'=>'content_detail_full')
+    	 
+    	$select->where(array('contentdetailfull.idforeign'=>$id));
+    	$selectString = $sql->prepareStatementForSqlObject($select);
+    	
+    	//return $selectString ;die;
+    	
+    	$results = $selectString->execute();
+    	// swap
+    	$array = array();
+    	foreach ($results as $result)
+    	{
+    		$array[] = $result;
+    	}
+    
+    	return $array;
+    
+    }
+    
     public function saveIgirlxinhcom(Igirlxinhcom $Igirlxinhcom)
     {
         $data = array(
@@ -62,6 +93,7 @@ class IgirlxinhcomTable extends AbstractTableGateway
         $id = (int)$Igirlxinhcom->id;
         if ($id == 0) {
             $this->insert($data);
+            return $this->lastInsertValue;
         } else {
             if ($this->getIgirlxinhcom($id)) {
                 $this->update($data, array('id' => $id));
@@ -69,6 +101,31 @@ class IgirlxinhcomTable extends AbstractTableGateway
                 throw new \Exception('Form id does not exist');
             }
         }
+    }
+    
+    public function saveContent_detail_full($content_detail_full = Array() , $id_tamtay)
+    {
+    	$idtamtay = (int) $id_tamtay;
+    	if (is_array($content_detail_full) and !empty($content_detail_full))
+    	{
+    		$i = 1;
+    		foreach ($content_detail_full as $key => $srcurl)
+    		{
+    			
+    			$dbAdapter = $this->adapter;
+    			$sql       = "INSERT INTO contentdetailfull (idforeign,src)
+                              VALUES ('".$idtamtay."','".$srcurl."')";
+    
+    			$statement = $dbAdapter->query($sql);
+    			//return $statement; die;
+    			$result    = $statement->execute();
+    			$i++;
+    		}
+    
+    		return $result = 1;
+    	}else
+    		return $result = Null;
+    
     }
 
     public function deleteIgirlxinhcom($id)
@@ -101,7 +158,7 @@ class IgirlxinhcomTable extends AbstractTableGateway
     }
     
     
-    //fetch_All_Apphaivltv_Rest_Orderbyiddesc
+   
     public function fetch_All_Igirlxinhcomrest_Rest_Orderbyiddesc(Select $select = null) {
     	if (null === $select)
     		$select = new Select();
@@ -113,6 +170,20 @@ class IgirlxinhcomTable extends AbstractTableGateway
     	$resultSet->buffer();
     	return $resultSet;
     }
+    
+   
+    public function fetch_All_Phototamtayvnrest_Rest_Orderbyiddesc(Select $select = null) {
+    	if (null === $select)
+    		$select = new Select();
+    	$select->from('appsatellite');
+    	$select->where(array('appsatellite.nameapp = \'phototamtayvn\''));
+    	$select->order('id DESC');
+    	$resultSet = $this->selectWith($select);
+    	//return $resultSet;die;
+    	$resultSet->buffer();
+    	return $resultSet;
+    }
+    
     
     // rest haivl.com
     public function fetch_All_Apphaivlcom_Rest_Orderbyiddesc(Select $select = null) {

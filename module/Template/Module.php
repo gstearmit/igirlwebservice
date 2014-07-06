@@ -1,8 +1,10 @@
 <?php
 namespace Template;
 
+use Template\Model\TemplateTable;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+
 
 class Module
 {
@@ -21,11 +23,27 @@ class Module
     public function getAutoloaderConfig()
     {
         return array(
-            'Zend\Loader\StandardAutoloader' => array(
+        		'Zend\Loader\ClassMapAutoloader' => array(
+        				__DIR__ . '/autoload_classmap.php',
+        		),
+               'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
             ),
         );
+    }
+    
+    public function getServiceConfig()
+    {
+    	return array(
+    			'factories' => array(
+    					'Template\Model\TemplateTable' =>  function($sm) {
+    						$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+    						$table = new TemplateTable($dbAdapter);
+    						return $table;
+    					},
+    			),
+    	);
     }
 }

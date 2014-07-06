@@ -31,12 +31,26 @@ class IgirlxinhcomTable extends AbstractTableGateway
     */
     public function fetchAll(Select $select = null) {
     	if (null === $select)
-    		$select = new Select();
+    	$select = new Select();
     	$select->from($this->table);
     	$resultSet = $this->selectWith($select);
     	$resultSet->buffer();
     	return $resultSet;
     }
+    
+    public function fetchAllIgirlxinhcom(Select $select = null) {
+    	if (null === $select)
+    		$select = new Select();
+    	$select->from('appsatellite');
+    	$select->where(array('appsatellite.nameapp = \'igirlxinhcom\''));
+    	$select->order('id DESC');
+    	$resultSet = $this->selectWith($select);
+    	//return $resultSet;die;
+    	$resultSet->buffer();
+    	return $resultSet;
+    }
+    
+    
 
     public function getIgirlxinhcom($id)
     {

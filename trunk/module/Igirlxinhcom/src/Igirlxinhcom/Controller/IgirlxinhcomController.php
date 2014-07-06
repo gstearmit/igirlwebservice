@@ -24,16 +24,15 @@ class IgirlxinhcomController extends AbstractActionController {
 	protected $igirlxinhcomTable;
 	
 	public function indexAction() {
-		
-		// if (!$this->zfcUserAuthentication()->hasIdentity()) {
-		// return $this->redirect()->toRoute('zfcuser/login');
-		// }
+
 		$select = new Select ();
 		$order_by = $this->params ()->fromRoute ( 'order_by' ) ? $this->params ()->fromRoute ( 'order_by' ) : 'id';
 		$order = $this->params ()->fromRoute ( 'order' ) ? $this->params ()->fromRoute ( 'order' ) : Select::ORDER_ASCENDING;
 		$page = $this->params ()->fromRoute ( 'page' ) ? ( int ) $this->params ()->fromRoute ( 'page' ) : 1;
 		
 		$igirlxinhcoms = $this->getIgirlxinhcomTable ()->fetchAll ( $select->order ( $order_by . ' ' . $order ) );
+		
+		//var_dump($igirlxinhcoms);die;
 		$itemsPerPage = 3;
 		
 		$igirlxinhcoms->current ();

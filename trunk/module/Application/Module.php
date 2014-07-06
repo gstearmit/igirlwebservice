@@ -43,6 +43,11 @@ class Module
     						$acl = new Acl();
     						return $acl;
     					},
+    					'Application\Model\ApplicationTable' =>  function($sm) {
+    						$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+    						$table = new ApplicationTable($dbAdapter);
+    						return $table;
+    					},
     			),
     	);
     }

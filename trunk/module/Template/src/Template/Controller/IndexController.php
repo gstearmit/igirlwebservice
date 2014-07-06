@@ -3,45 +3,38 @@ namespace Template\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Igirlxinhcom\Model\Igirlxinhcom;
-use Igirlxinhcom\Model\IgirlxinhcomTable;
-use Igirlxinhcom\Form\IgirlxinhcomForm;
+use Template\Model\Template;
+//use Template\Model\TemplateTable;
+use Template\Form\TemplateForm;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 use Zend\Db\Sql\Select;
 
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Mvc\MvcEvent;
+use Zend\View\Model\JsonModel;
 
 class IndexController extends AbstractActionController
 {
-	protected $igirlxinhcomTable;
-	public function getIgirlxinhcomTable() {
-		if (! $this->igirlxinhcomTable) {
-			$sm = $this->getServiceLocator ();
-			$this->igirlxinhcomTable = $sm->get ( 'Igirlxinhcom\Model\IgirlxinhcomTable' );
-		}
-		return $this->igirlxinhcomTable;
-	}
+	protected $templateTable;
+	
     public function indexAction()
     {    	
-//    		$igirl = new Igirlxinhcom();
-//    		$arr = $igirl->fetch_All_Igirlxinhcomrest_Rest_Orderbyiddesc();
-//    		echo "ssdsdsdsd";
-//    		var_dump($arr);
-//    		die;
-    	  $arr  = "Hoang OPcng Phuc";
-//    		$select = new Select ();
-//    		$order_by = $this->params ()->fromRoute ( 'order_by' ) ? $this->params ()->fromRoute ( 'order_by' ) : 'id';
-//    		$order = $this->params ()->fromRoute ( 'order' ) ? $this->params ()->fromRoute ( 'order' ) : Select::ORDER_ASCENDING;
-//    		$page = $this->params ()->fromRoute ( 'page' ) ? ( int ) $this->params ()->fromRoute ( 'page' ) : 1;
    		
-//    		$igirlxinhcoms = $this->getIgirlxinhcomTable ()->fetchAll ( $select->order ( $order_by . ' ' . $order ) );
-//    		$itemsPerPage = 3;
+   		$select = new Select ();
+   		$order_by = $this->params ()->fromRoute ( 'order_by' ) ? $this->params ()->fromRoute ( 'order_by' ) : 'id';
+   		$order = $this->params ()->fromRoute ( 'order' ) ? $this->params ()->fromRoute ( 'order' ) : Select::ORDER_ASCENDING;
+   		$page = $this->params ()->fromRoute ( 'page' ) ? ( int ) $this->params ()->fromRoute ( 'page' ) : 1;
    		
-//    		$igirlxinhcoms->current ();
-//    		$paginator = new Paginator ( new paginatorIterator ( $igirlxinhcoms ) );
-//    		$paginator->setCurrentPageNumber ( $page )->setItemCountPerPage ( $itemsPerPage )->setPageRange ( 4 );
+   		$igirlxinhcoms = $this->getTemplateTable()->fetchAllTemplate($select->order ( $order_by . ' ' . $order));
+   		
+   		var_dump($igirlxinhcoms);
+   		
+   		$itemsPerPage = 3;
+   		
+   		$igirlxinhcoms->current ();
+   		$paginator = new Paginator ( new paginatorIterator ( $igirlxinhcoms ) );
+   		$paginator->setCurrentPageNumber ( $page )->setItemCountPerPage ( $itemsPerPage )->setPageRange ( 4 );
    		
 //    		return new ViewModel ( array (
 //    				// 'igirlxinhcoms' => $this->getIgirlxinhcomTable()->fetchAll(),
@@ -90,6 +83,14 @@ class IndexController extends AbstractActionController
     {    
         die('buildappbuildapp');
     	$this->layout('layout/home');
+    }
+    
+    public function getTemplateTable() {
+    	if (! $this->templateTable) {
+    		$sm = $this->getServiceLocator ();
+    		$this->templateTable = $sm->get ( 'Template\Model\TemplateTable' );
+    	}
+    	return $this->templateTable;
     }
 }
 

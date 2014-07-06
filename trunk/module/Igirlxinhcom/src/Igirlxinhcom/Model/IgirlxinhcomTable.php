@@ -78,6 +78,33 @@ class IgirlxinhcomTable extends AbstractTableGateway
     
     }
     
+    public function getIgirlxinhid($id)
+    {
+    	 
+    	$id = (int) $id;
+    	$sql = new Sql($this->adapter);
+    	$select = $sql->select();
+    	$select->columns(array('src'=>'src')); //,'idforeign'=>'idforeign'
+    	$select->from ('contentdetailfull')
+    	->join('appsatellite', 'contentdetailfull.idforeign= appsatellite.id',array()); //array('id'=>'id','nameapp'=>'nameapp','title'=>'title','link'=>'link','image_thumbnail'=>'image_thumbnail','content_detail'=>'content_detail','content_detail_full'=>'content_detail_full')
+    
+    	$select->where(array('contentdetailfull.idforeign'=>$id));
+    	$selectString = $sql->prepareStatementForSqlObject($select);
+    	 
+    	//return $selectString ;die;
+    	 
+    	$results = $selectString->execute();
+    	// swap
+    	$array = array();
+    	foreach ($results as $result)
+    	{
+    		$array[] = $result;
+    	}
+    
+    	return $array;
+    
+    }
+    
     public function saveIgirlxinhcom(Igirlxinhcom $Igirlxinhcom)
     {
         $data = array(
@@ -105,10 +132,12 @@ class IgirlxinhcomTable extends AbstractTableGateway
     
     public function saveContent_detail_full($content_detail_full = Array() , $id_tamtay)
     {
+    	//return $content_detail_full;
+    	
     	$idtamtay = (int) $id_tamtay;
     	if (is_array($content_detail_full) and !empty($content_detail_full))
     	{
-    		$i = 1;
+    		
     		foreach ($content_detail_full as $key => $srcurl)
     		{
     			
@@ -119,7 +148,7 @@ class IgirlxinhcomTable extends AbstractTableGateway
     			$statement = $dbAdapter->query($sql);
     			//return $statement; die;
     			$result    = $statement->execute();
-    			$i++;
+    			
     		}
     
     		return $result = 1;

@@ -45,9 +45,10 @@ class MagazinepublishController extends AbstractActionController {
 	}
 	public function indexAction() {
 		// check login
-		// if (! $this->zfcUserAuthentication ()->hasIdentity ()) {
-		// return $this->redirect ()->toRoute ( 'zfcuser/login' );
-		// } else {
+		if (! $this->zfcUserAuthentication ()->hasIdentity ()) {
+		return $this->redirect ()->toRoute ( 'zfcuser/login' );
+		}
+		// else {
 		$searchform = new SearchFromMagazinepublish ();
 		$searchform->get ( 'submit' )->setValue ( 'Search' );
 		

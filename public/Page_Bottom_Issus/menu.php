@@ -1,9 +1,27 @@
-  <li class="title">Menu</li>
-                <li class="active"><a  href="<?php echo $this->url();  ?>">Home</a></li>
-                <li><a  href="<?php echo $this->url() . '/index/magazinepublish';?>">Magazine</a></li>
-                <li><a  href="<?php echo $this->url() . '/index/story';?>">Story</a></li>
-                <li><a  href="<?php echo $this->url() . '/index/ebook';?>">Ebook</a></li>
-                <li><a  href="<?php echo $this->url() . '/index/appmobile';?>">App Mobile</a>
-                <li><a  href="<?php echo $this->url() . '/index/buildapp';?>">Build App Mobile</a>
-                <li><a  href="/user/login">login</a>
- </li>
+<div class="navbar" role="navigation">
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse"
+			data-target="#rebound-navbar-collapse">
+			<span class="fa fa-bars"></span> Menu
+		</button>
+		<a href="<?php echo WEB_PATH; ?>" class="navbar-brand">Play boy viet</a>
+		<p class="brand-text">Play boy- App Mobile.</p>
+	</div>
+	<!-- end navbar-header -->
+	<div class="collapse navbar-collapse" id="rebound-navbar-collapse">
+		<ul class="nav navbar-nav">
+
+			<li class="title">Menu</li>
+			<li class="active"><a href="<?php echo WEB_PATH; ?>">Home</a></li>
+			<li><a href="<?php echo WEB_PATH. '/igirlxinhcom-rest';?>">igirlxinhcom</a></li>
+			<li><a href="<?php echo WEB_PATH. '/phototamtayvn-rest';?>">Phototamtay</a></li>
+			<li><a href="<?php echo WEB_PATH;?>/user/login">login</a></li>
+
+		</ul>
+              <?php require_once 'search.php';?>
+              <?php require_once 'sortedbytopics.php';?>
+              
+            </div>
+	<!-- end navbar-collapse -->
+</div>
+<!-- end navbar -->

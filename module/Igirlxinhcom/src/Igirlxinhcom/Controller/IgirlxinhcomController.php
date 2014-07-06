@@ -571,8 +571,8 @@ class IgirlxinhcomController extends AbstractActionController {
 		$nameapp = 'igirlxinhcom';
 		$igirlxinhcom = array (
 				'nameapp' => $nameapp,
-				'title' => "",
-				'link' => "",
+				'title' => $nameapp,
+				'link' => $domain,
 				'items' => array ()
 		);
 		
@@ -586,19 +586,23 @@ class IgirlxinhcomController extends AbstractActionController {
 			$aelement = $r->getElementsByTagName ( "a" )->item (0);
 			if ($aelement->hasAttributes ()) {
 				//$igirlxinhcom ['items'][$i]->id =  $i;
+				$igirlxinhcom ['items'][$i]->link  = '';
 				$igirlxinhcom ['items'][$i]->content_detail =  $aelement->getAttribute ( 'title' );
 				$igirlxinhcom ['items'][$i]->image_thumbnail  = $aelement->getAttributeNode('href')->nodeValue;
 				$i++;
 			}
 		}
 		
-		// get detail contend
+// 		// get detail inenr contend
 		$get_chap = $dom->execute ( '#container #content .post-thumb' );
 		$i= 0;
 		foreach ( $get_chap as $keyim =>$valuediv ) {
-			$igirlxinhcom ['items'][$i]->content_detail_full = $this->innerHTML($valuediv);
+			$tmp_inner = $this->innerHTML($valuediv);
+			$contentget = $this->ConTentDomProcess($tmp_inner); // new dom --> get array loop a : href 
+			$igirlxinhcom ['items'][$i]->content_detail_full = $contentget;
 			$i++;
 		}
+		
 		
 // 		echo "--------------------------------------</br>";
 // 		echo '<pre>';
@@ -673,10 +677,41 @@ class IgirlxinhcomController extends AbstractActionController {
 				$atrrytmp = (array)$lvalue;
 				$igirl = New Igirlxinhcom();
 				$igirl->exchangeArrayigril($atrrytmp,$nameppp,$titlep,$linkp);
-				$this->getigirlxinhcomTable()->saveIgirlxinhcom($igirl);
+				$id_girl = $this->getigirlxinhcomTable()->saveIgirlxinhcom($igirl);
+				
+				// save 1-n field content_detail_full in table content_detail_full
+				$arrject = (array)$lvalue->content_detail_full; // Oject
+
+// 				var_dump($id_girl);
+// 				echo "--------------------------</br>";
+//                 echo "<pre>";
+// 				print_r($arrject);
+// 				echo "</pre>";
+				
+				if (is_array($arrject) and !empty($arrject))
+				{
+				
+					$returnResult = $this->getigirlxinhcomTable()->saveContent_detail_full($arrject,$id_girl);
+// 									echo "-----------returnResult---------------</br>";
+// 					                echo "<pre>";
+// 									print_r($returnResult);
+// 									echo "</pre>";
+				   // break; 
+					if($returnResult === 1)
+					{
+							
+					}else {
+						die('Oop! Error .Not Save detail . Please try again');
+				
+					}
+				
+				}
 			}
 			
 		}
+		
+
+		
 		
 		return new JsonModel ( array (
 				'data' => $igirlxinhcom 
@@ -843,10 +878,7 @@ class IgirlxinhcomController extends AbstractActionController {
 				$igirl = New Igirlxinhcom();
 				$igirl->exchangeArrayigril($atrrytmp,$nameppp,$titlep,$linkp);
 				$id_tamtay = $this->getigirlxinhcomTable()->saveIgirlxinhcom($igirl);
-				
-				//var_dump($id_tamtay);
-				
-				
+
 				// save 1-n field content_detail_full in table content_detail_full
 				   $arrject = (array)$lvalue->content_detail_full; // Oject
 				   if (is_array($arrject) and !empty($arrject))
@@ -862,29 +894,33 @@ class IgirlxinhcomController extends AbstractActionController {
 				   	
 				   	}
 				   
-				   	
-// 				   	    echo "zzzzxzxz --- </br>";
-// 					   	echo '<pre>';
-// 					   //	print_r($lvalue->content_detail_full);
-// 					   print_r($arrject);
-// 					   	echo '</pre>';
-// 					   	echo '------------</br>';
 				   }
 				
-				//break;
 			}
 				
 		}
 	
-		//die;
-		
-		
 		return new JsonModel ( array (
 				'data' => $phototamtayvn
 		) );
 	}
 	
-	
+	//Query Dom
+	public function ConTentDomProcess($dom)
+	{
+		$DomAr = new Query($dom);
+		$ArrDom = $DomAr->execute('a');
+		//return $ArrDom->count();
+		$array_img_get = array();
+		foreach ( $ArrDom as $key => $r ) {
+// 			$aelement = $r->getElementsByTagName ( "a" )->item (0);
+// 			if ($aelement->hasAttributes ()) {
+				$array_img_get[]  = $r->getAttributeNode('href')->nodeValue;
+	//		}
+		}
+		
+		return $array_img_get;
+	}
 	
 	// get item file cahe
 	public function get_hamtruyen() {

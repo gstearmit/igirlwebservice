@@ -32,7 +32,9 @@ class IgirlxinhcomrestController extends AbstractRestfulController
     public function get($id)
     {
     	
-        $igirlxinhcom = $this->getIgirlxinhcomTable()->getIgirlxinhcom($id);
+        //$igirlxinhcom = $this->getIgirlxinhcomTable()->getIgirlxinhcom($id);
+    	$igirlxinhcom = $this->getIgirlxinhcomTable()->getIgirlxinhid($id);
+    	
 //         var_dump($igirlxinhcom);die();
         return new JsonModel(array(
             'data' => $igirlxinhcom,

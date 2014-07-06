@@ -176,7 +176,7 @@ class UserController extends AbstractActionController
         }
       
        // return $this->redirect()->toRoute($route);          // route --> indexaction UserController : $route = 'zfcuser';
-        return $this->redirect()->toRoute('magazinepublish'); // router Action magazine
+        return $this->redirect()->toRoute('igirlxinhcom'); // router Action magazine
     }
 
     /**

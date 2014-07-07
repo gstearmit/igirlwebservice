@@ -77,8 +77,8 @@ class Igirlxinhcom implements InputFilterAwareInterface
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name'     => 'artist',
-                'required' => true,
+                'name'     => 'nameapp',
+                'required' => fasle,
                 'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
@@ -97,7 +97,7 @@ class Igirlxinhcom implements InputFilterAwareInterface
 
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'title',
-                'required' => true,
+                'required' => false,
                 'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
@@ -113,7 +113,106 @@ class Igirlxinhcom implements InputFilterAwareInterface
                     ),
                 ),
             )));
+            
+            $inputFilter->add($factory->createInput(array(
+            		'name'     => 'link',
+            		'required' => false,
+            		'filters'  => array(
+            				array('name' => 'StripTags'),
+            				array('name' => 'StringTrim'),
+            		),
+            		'validators' => array(
+            				array(
+            						'name'    => 'StringLength',
+            						'options' => array(
+            								'encoding' => 'UTF-8',
+            								'min'      => 1,
+            								'max'      => 100,
+            						),
+            				),
+            		),
+            )));
 
+            
+            $inputFilter->add ( $factory->createInput ( array (
+            		'name' => 'image_thumbnail',
+            		'required' => true,
+            		'validators' => array (
+            				array (
+            						'name' => 'FileExtension',
+            						'options' => array (
+            								'extension' => 'jpg, jpeg, png'
+            						)
+            				),
+            				array (
+            						'name' => 'FileSize',
+            						'options' => array (
+            								'min' => 1000,
+            								'max' => 10485760
+            						),
+            						array (
+            								'name' => 'StringLength',
+            								'options' => array (
+            										'encoding' => 'UTF-8',
+            										'min' => 1,
+            										'max' => 100
+            								)
+            						)
+            				)
+            		)
+            ) ) );
+            
+            //content_detail
+            $inputFilter->add ( $factory->createInput ( array (
+            		'name' => 'content_detail',
+            		'required' => true,
+            		'filters' => array (
+            				array (
+            						'name' => 'StripTags'
+            				),
+            				array (
+            						'name' => 'StringTrim'
+            				)
+            		),
+            		'validators' => array (
+            				array (
+            						'name' => 'StringLength',
+            						'options' => array (
+            								'encoding' => 'UTF-8',
+            								'min' => 1,
+            								'max' => 100
+            						)
+            				)
+            		)
+            ) ) );
+            
+            //content_detail_full
+            $inputFilter->add ( $factory->createInput ( array (
+            		'name' => 'content_detail_full',
+            		'required' => true,
+            		'filters' => array (
+            				array (
+            						'name' => 'StripTags'
+            				),
+            				array (
+            						'name' => 'StringTrim'
+            				)
+            		),
+            		'validators' => array (
+            				array (
+            						'name' => 'StringLength',
+            						'options' => array (
+            								'encoding' => 'UTF-8',
+            								'min' => 1,
+            								'max' => 100
+            						)
+            				)
+            		)
+            ) ) );
+            
+            
+            
+            
             $this->inputFilter = $inputFilter;        
         }
 

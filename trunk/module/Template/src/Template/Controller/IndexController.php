@@ -45,6 +45,19 @@ class IndexController extends AbstractActionController
     			   				'page' => $page,
     			   				'paginator' => $paginator
     	));
+
+    	
+//     	$igirlxinhcoms = $this->getTemplateTable ()->fetchAllVIEW();
+    	
+// //     	echo "<pre>";
+// //     	print_r($igirlxinhcoms);
+// //     	echo '</pre>';
+// //     	die;
+    	
+//     	return new ViewModel ( array (
+//     			// 'igirlxinhcoms' => $this->getIgirlxinhcomTable()->fetchAll(),
+//     			'igirlxinhcoms' => $igirlxinhcoms,
+//     	) );
     }
     
     public function magazinepublishAction()

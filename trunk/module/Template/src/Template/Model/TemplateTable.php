@@ -205,6 +205,31 @@ class TemplateTable extends AbstractTableGateway
     	return $resultSet;
     }
     
+    public function fetchAllVIEW(Select $select = null) {
+    	//return $selectString="Hoang Phuc" ;die;
+    	if (null === $select)
+    	$sql = new Sql($this->adapter);
+    	$select = $sql->select();
+    	//$select->columns(array()); //,'idforeign'=>'idforeign'
+    	$select->from('appsatellite');
+    	$conditions = array('appsatellite.nameapp = \'igirlxinhcom\'','appsatellite.nameapp = \'phototamtayvn\'');
+    	$select->where($conditions,\Zend\Db\Sql\Predicate\PredicateSet::OP_OR);
+    	$select->order('id DESC');
+    	
+    	$selectString = $sql->prepareStatementForSqlObject($select);
+    	 
+    	return $selectString ;die;
+    	 
+    	$results = $selectString->execute();
+    	// swap
+    	$array = array();
+    	foreach ($results as $result)
+    	{
+    		$array[] = $result;
+    	}
+    
+    	return $array;
+    }
    
     public function fetch_All_Phototamtayvnrest_Rest_Orderbyiddesc(Select $select = null) {
     	if (null === $select)

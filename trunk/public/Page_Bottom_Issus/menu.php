@@ -4,7 +4,7 @@
 			data-target="#rebound-navbar-collapse">
 			<span class="fa fa-bars"></span> Menu
 		</button>
-		<a href="<?php echo WEB_PATH; ?>" class="navbar-brand">Play boy viet</a>
+		<a href="<?php echo WEB_PATH; ?>" class="navbar-brand" style="font-size: 53px;">Play boy viet</a>
 		<p class="brand-text">Play boy- App Mobile.</p>
 	</div>
 	<!-- end navbar-header -->

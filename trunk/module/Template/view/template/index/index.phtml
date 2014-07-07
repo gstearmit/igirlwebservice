@@ -4,15 +4,85 @@
 // 	var_dump($girlxinh);//die;
 // 	var_dump($basepathview);
 ?>
+
+<?php /*
+?>
+<table class="table">
+    <tr>
+        <th>
+            <a href="<?php echo $this->url('template', array('order_by' => 'title', 'order' => $url_order, 'search_by' => $search_by)); ?>">Title <?php if ($order_by == 'title'): ?><i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?></a>
+        </th>
+        <th>
+            <a href="<?php echo $this->url('template', array('order_by' => 'description', 'order' => $url_order, 'search_by' => $search_by)); ?>">description <?php if ($order_by == 'description'): ?><i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?></a>
+        </th>
+        <th>
+            <a href="<?php echo $this->url('template', array('order_by' => 'img', 'order' => $url_order, 'search_by' => $search_by)); ?>">Thumbnail <?php if ($order_by == 'img'): ?><i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?></a>
+        </th>
+        
+          <th>
+            <a href="<?php echo $this->url('template', array('order_by' => 'page', 'order' => $url_order,'search_by' => $search_by)); ?>">Page <?php if ($order_by == 'page'): ?><i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?></a>
+        </th>
+        
+        <th><a href="">Action</a></th>
+    </tr>
+    <?php foreach ($paginator as $template) : ?>
+        <tr>
+            <td><?php echo $this->escapeHtml($template->title); ?></td>
+            <td><div><?php echo $template->description; ?></div></td>
+            <td><img src="<?php echo WEB_PATH_IMG.'/';?><?php echo $this->escapeHtml($template->img); ?>" style="width: 100px; height:100px;"/></td>
+            <td><?php if($template->page !== '') { ?><div>Page : <?php echo $template->page; ?></div><?php }?></td>
+            <td>
+          <!-- 
+                <a class="btn " href="<?php echo $this->url('template', array('action' => 'edit', 'id' => $template->id));
+        ?>">Edit</a> 
+          -->
+                <a class="btn" href="<?php echo $this->url('template', array('action' => 'delete', 'id' => $template->id));
+        ?>">Delete</a>
+              
+                  <?php
+                    $delurl = $this->url('template', array (
+                        'action' => 'delete',
+                        'id'     => $template->id,
+                    ));
+                    ?>
+                <!--    <div style="display: none;">
+                        <form action="<?php echo $delurl; ?>" method="post" id="post_<?php echo $template->id; ?>" name="post_<?php echo $template->id; ?>">
+                            <input type="hidden" name="id" value="<?php echo (int) $template->id; ?>" />
+                        </form>
+                    </div>
+                    <a onclick="if (confirm('Are you sure you want to delete <?php echo $template->id; ?>?')) {document.<?php echo "post_" . $template->id; ?>.submit();} event.returnValue = false; return false;" href="#" class="btn btn-mini edit-row">Delete</a>
+               -->  
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+<?php
+   echo $this->paginationControl(
+           $paginator, 'Sliding', 'page-template', array('order_by' => $order_by, 'order' => $order , 'search_by' => $search_by, 'pageAction' => $pageAction)
+   );
+
+
+    ?>
+
+*/ ?>
+
+
+
  <div class="portfolio-wrapper">
+    <?php foreach ($paginator as $template) : ?>
+ 
             <div class="card film art">
               <a  href="#" class="thumb">
-                <img src="<?php echo $basepathview; ?>img/sample/sintel/sample-sintel-1.jpg" alt="" title="" />
+              <?php   if($template->image_thumbnail != '') {?>
+                <img src="<?php echo $template->image_thumbnail;  ?>" alt="" title="<?php echo $this->escapeHtml($template->title); ?>" />
+                <?php }else { ?>
+                    <img src="<?php echo $basepathview; ?>img/sample/elephants-dream/imgdefault.jpg" alt="" title="" />
+                <?php }?>
                 <span class="overlay"><span class="fa fa-search"></span></span>
               </a>
               <div class="card-body">
-                <h2><a  href="#">Sintel at Seattle International Film Festival</a></h2>
-                <p>The cinema where Sintel screens has digital 4k projection, I’m working with them getting this formatted right and delivered. Would be a real ...</p>
+                <h2><a  href="#"><?php echo $this->escapeHtml($template->content_detail); ?></a></h2>
+                <p><?php echo $this->escapeHtml($template->title); ?></p>
                 <p><a  href="#">Read More</a></p>
               </div><!-- end card-body -->
               <div class="card-footer">
@@ -22,6 +92,33 @@
                 </ul>
               </div><!-- end card-footer -->
             </div><!-- end card -->
+            
+            <div class="card music art">
+              <a  href="#" class="thumb">
+              <?php if($template->image_thumbnail != '') {?>
+                <img src="<?php echo $template->image_thumbnail;  ?>" alt="" title="<?php echo $this->escapeHtml($template->title); ?>" />
+                <?php }else { ?>
+                    <img src="<?php echo $basepathview; ?>img/sample/elephants-dream/imgdefault.jpg" alt="" title="" />
+                <?php }?>
+                <span class="overlay"><span class="fa fa-search"></span></span>
+              </a>
+              <div class="card-body">
+                <h2><a  href="#"><?php echo $this->escapeHtml($template->content_detail); ?></a></h2>
+                <p><?php echo $this->escapeHtml($template->title); ?></p>
+                <p><a  href="#">Read More</a></p>
+              </div><!-- end card-body -->
+              <div class="card-footer">
+                <ul class="list-inline filters">
+                  <li><a  href="#none">music</a></li>
+                  <li><a  href="#none">Art</a></li>
+                </ul>
+              </div><!-- end card-footer -->
+            </div><!-- end card -->
+      <?php endforeach; ?>     
+            
+            
+            
+            <?php /*?>
             <div class="card music social">
               <a  href="#" class="thumb">
                 <img src="<?php echo $basepathview; ?>img/sample/elephants-dream/sample-elephants-1.jpg" alt="" title="" />
@@ -39,225 +136,11 @@
                 </ul>
               </div><!-- end card-footer -->
             </div><!-- end card -->
-            <div class="card film social">
-              <a  href="#" class="thumb">
-                <img src="<?php echo $basepathview; ?>img/sample/big-buck-bunny/sample-bunny-1.png" alt="" title="" />
-                <span class="overlay"><span class="fa fa-search"></span></span>
-              </a>
-              <div class="card-body">
-                <h2><a  href="#">Big Buck Bunny</a></h2>
-                <p>A comedy about a fat rabbit taking revenge on three irritating rodents. The film - in the fastest imaginable 3D computer animation - almost seems...</p>
-                <p><a  href="#">Read More</a></p>
-              </div><!-- end card-body -->
-              <div class="card-footer">
-                <ul class="list-inline filters">
-                  <li><a  href="#none">Film</a></li>
-                  <li><a  href="#none">Social</a></li>
-                </ul>
-              </div><!-- end card-footer -->
-            </div><!-- end card -->
-            <div class="card film art">
-              <a  href="#" class="thumb">
-                <img src="<?php echo $basepathview; ?>img/sample/sintel/sample-sintel-2.jpg" alt="" title="" />
-                <span class="overlay"><span class="fa fa-search"></span></span>
-              </a>
-              <div class="card-body">
-                <h2><a  href="#">Sintel Review</a></h2>
-                <p>The cinema where Sintel screens has digital 4k projection, I’m working with them getting this formatted right and delivered. Would be a real ...</p>
-                <p><a  href="#">Read More</a></p>
-              </div><!-- end card-body -->
-              <div class="card-footer">
-                <ul class="list-inline filters">
-                  <li><a  href="#none">Film</a></li>
-                  <li><a  href="#none">Art</a></li>
-                </ul>
-              </div><!-- end card-footer -->
-            </div><!-- end card -->
-            <div class="card film social">
-              <a  href="#" class="thumb">
-                <img src="<?php echo $basepathview; ?>img/sample/big-buck-bunny/sample-bunny-3.png" alt="" title="" />
-                <span class="overlay"><span class="fa fa-search"></span></span>
-              </a>
-              <div class="card-body">
-                <h2><a  href="#">Big Buck Bunny In CG Magazine From China</a></h2>
-                <p>A comedy about a fat rabbit taking revenge on three irritating rodents. The film - in the fastest imaginable 3D computer animation - almost seems...</p>
-                <p><a  href="#">Read More</a></p>
-              </div><!-- end card-body -->
-              <div class="card-footer">
-                <ul class="list-inline filters">
-                  <li><a  href="#none">Film</a></li>
-                  <li><a  href="#none">Social</a></li>
-                </ul>
-              </div><!-- end card-footer -->
-            </div><!-- end card -->
-            <div class="card music social">
-              <a  href="#" class="thumb">
-                <img src="<?php echo $basepathview; ?>img/sample/elephants-dream/sample-elephants-2.jpg" alt="" title="" />
-                <span class="overlay"><span class="fa fa-search"></span></span>
-              </a>
-              <div class="card-body">
-                <h2><a  href="#">Singapore, CGOverdrive And 3dsense</a></h2>
-                <p>Elephants Dream is the world’s first open movie, made entirely with open source graphics software such as Blender , and with all production ...</p>
-                <p><a  href="#">Read More</a></p>
-              </div><!-- end card-body -->
-              <div class="card-footer">
-                <ul class="list-inline filters">
-                  <li><a  href="#none">Music</a></li>
-                  <li><a  href="#none">Social</a></li>
-                </ul>
-              </div><!-- end card-footer -->
-            </div><!-- end card -->
-            <div class="card film art">
-              <a  href="#" class="thumb">
-                <img src="<?php echo $basepathview; ?>img/sample/sintel/sample-sintel-3.jpg" alt="" title="" />
-                <span class="overlay"><span class="fa fa-search"></span></span>
-              </a>
-              <div class="card-body">
-                <h2><a  href="#">Sintel at Seattle International Film Festival</a></h2>
-                <p>The cinema where Sintel screens has digital 4k projection, I’m working with them getting this formatted right and delivered. Would be a real ...</p>
-                <p><a  href="#">Read More</a></p>
-              </div><!-- end card-body -->
-              <div class="card-footer">
-                <ul class="list-inline filters">
-                  <li><a  href="#none">Film</a></li>
-                  <li><a  href="#none">Art</a></li>
-                </ul>
-              </div><!-- end card-footer -->
-            </div><!-- end card -->
-            <div class="card film social">
-              <a  href="#" class="thumb">
-                <img src="<?php echo $basepathview; ?>img/sample/big-buck-bunny/sample-bunny-2.png" alt="" title="" />
-                <span class="overlay"><span class="fa fa-search"></span></span>
-              </a>
-              <div class="card-body">
-                <h2><a  href="#">Studio Harddisk Online</a></h2>
-                <p>A comedy about a fat rabbit taking revenge on three irritating rodents. The film - in the fastest imaginable 3D computer animation - almost seems...</p>
-                <p><a  href="#">Read More</a></p>
-              </div><!-- end card-body -->
-              <div class="card-footer">
-                <ul class="list-inline filters">
-                  <li><a  href="#none">Film</a></li>
-                  <li><a  href="#none">Social</a></li>
-                </ul>
-              </div><!-- end card-footer -->
-            </div><!-- end card -->
-            <div class="card music social">
-              <a  href="#" class="thumb">
-                <img src="<?php echo $basepathview; ?>img/sample/elephants-dream/sample-elephants-3.jpg" alt="" title="" />
-                <span class="overlay"><span class="fa fa-search"></span></span>
-              </a>
-              <div class="card-body">
-                <h2><a  href="#">High Frame Rate, 4K And Stereo 3D Release</a></h2>
-                <p>Elephants Dream is the world’s first open movie, made entirely with open source graphics software such as Blender , and with all production ...</p>
-                <p><a  href="#">Read More</a></p>
-              </div><!-- end card-body -->
-              <div class="card-footer">
-                <ul class="list-inline filters">
-                  <li><a  href="#none">Music</a></li>
-                  <li><a  href="#none">Social</a></li>
-                </ul>
-              </div><!-- end card-footer -->
-            </div><!-- end card -->
-            <div class="card film art">
-              <a  href="#" class="thumb">
-                <img src="<?php echo $basepathview; ?>img/sample/sintel/sample-sintel-4.jpg" alt="" title="" />
-                <span class="overlay"><span class="fa fa-search"></span></span>
-              </a>
-              <div class="card-body">
-                <h2><a  href="<?php echo $basepathview; ?>">Sintel at Seattle International Film Festival</a></h2>
-                <p>The cinema where Sintel screens has digital 4k projection, I’m working with them getting this formatted right and delivered. Would be a real ...</p>
-                <p><a  href="<?php echo $basepathview; ?>">Read More</a></p>
-              </div><!-- end card-body -->
-              <div class="card-footer">
-                <ul class="list-inline filters">
-                  <li><a  href="#none">Film</a></li>
-                  <li><a  href="#none">Art</a></li>
-                </ul>
-              </div><!-- end card-footer -->
-            </div><!-- end card -->
-            <div class="card film social">
-              <a  href="#" class="thumb">
-                <img src="<?php echo $basepathview; ?>img/sample/big-buck-bunny/sample-bunny-1.png" alt="" title="" />
-                <span class="overlay"><span class="fa fa-search"></span></span>
-              </a>
-              <div class="card-body">
-                <h2><a  href="#">Big Buck Bunny</a></h2>
-                <p>A comedy about a fat rabbit taking revenge on three irritating rodents. The film - in the fastest imaginable 3D computer animation - almost seems...</p>
-                <p><a  href="#">Read More</a></p>
-              </div><!-- end card-body -->
-              <div class="card-footer">
-                <ul class="list-inline filters">
-                  <li><a  href="#none">Film</a></li>
-                  <li><a  href="#none">Social</a></li>
-                </ul>
-              </div><!-- end card-footer -->
-            </div><!-- end card -->
-            <div class="card music social">
-              <a  href="#" class="thumb">
-                <img src="<?php echo $basepathview; ?>img/sample/elephants-dream/sample-elephants-2.jpg" alt="" title="" />
-                <span class="overlay"><span class="fa fa-search"></span></span>
-              </a>
-              <div class="card-body">
-                <h2><a  href="#">Elephants Dream</a></h2>
-                <p>Elephants Dream is the world’s first open movie, made entirely with open source graphics software such as Blender , and with all production ...</p>
-                <p><a  href="#">Read More</a></p>
-              </div><!-- end card-body -->
-              <div class="card-footer">
-                <ul class="list-inline filters">
-                  <li><a  href="#none">Music</a></li>
-                  <li><a  href="#none">Social</a></li>
-                </ul>
-              </div><!-- end card-footer -->
-            </div><!-- end card -->
-            <div class="card film art">
-              <a  href="#" class="thumb">
-                <img src="<?php echo $basepathview; ?>img/sample/sintel/sample-sintel-3.jpg" alt="" title="" />
-                <span class="overlay"><span class="fa fa-search"></span></span>
-              </a>
-              <div class="card-body">
-                <h2><a  href="#">Sintel at Seattle International Film Festival</a></h2>
-                <p>The cinema where Sintel screens has digital 4k projection, I’m working with them getting this formatted right and delivered. Would be a real ...</p>
-                <p><a  href="#">Read More</a></p>
-              </div><!-- end card-body -->
-              <div class="card-footer">
-                <ul class="list-inline filters">
-                  <li><a  href="#none">Film</a></li>
-                  <li><a  href="#none">Art</a></li>
-                </ul>
-              </div><!-- end card-footer -->
-            </div><!-- end card -->
-            <div class="card film social">
-              <a  href="#" class="thumb">
-                <img src="<?php echo $basepathview; ?>img/sample/big-buck-bunny/sample-bunny-3.png" alt="" title="" />
-                <span class="overlay"><span class="fa fa-search"></span></span>
-              </a>
-              <div class="card-body">
-                <h2><a  href="#">BBB Goes Hollywood!</a></h2>
-                <p>A comedy about a fat rabbit taking revenge on three irritating rodents. The film - in the fastest imaginable 3D computer animation - almost seems...</p>
-                <p><a  href="#">Read More</a></p>
-              </div><!-- end card-body -->
-              <div class="card-footer">
-                <ul class="list-inline filters">
-                  <li><a  href="#none">Film</a></li>
-                  <li><a  href="#none">Social</a></li>
-                </ul>
-              </div><!-- end card-footer -->
-            </div><!-- end card -->
-            <div class="card music social">
-              <a  href="#" class="thumb">
-                <img src="<?php echo $basepathview; ?>img/sample/elephants-dream/sample-elephants-1.jpg" alt="" title="" />
-                <span class="overlay"><span class="fa fa-search"></span></span>
-              </a>
-              <div class="card-body">
-                <h2><a  href="#">Elephants Dream</a></h2>
-                <p>Elephants Dream is the world’s first open movie, made entirely with open source graphics software such as Blender , and with all production ...</p>
-                <p><a  href="#">Read More</a></p>
-              </div><!-- end card-body -->
-              <div class="card-footer">
-                <ul class="list-inline filters">
-                  <li><a  href="#none">Music</a></li>
-                  <li><a  href="#none">Social</a></li>
-                </ul>
-              </div><!-- end card-footer -->
-            </div><!-- end card -->
-          </div><!-- end portfolio-wrapper -->
+            
+            */?>
+            
+          
+            
+            
+            
+  </div><!-- end portfolio-wrapper -->

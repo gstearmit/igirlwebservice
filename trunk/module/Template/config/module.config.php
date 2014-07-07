@@ -65,7 +65,8 @@ return array(
    
      'view_manager' => array(    	
      	'template_map' => array(
-     			'layout/home'        => TEMPLATE_ISSUS . '/index.phtml'
+     			'layout/home'        => TEMPLATE_ISSUS . '/index.phtml',
+     			'page-template' => __DIR__ . '/../view/layout/slidePaginator.phtml',
      	),
         'template_path_stack' => array(
             'template' => __DIR__ . '/../view',

@@ -1,8 +1,8 @@
 <ul class="nav navbar-nav filter-portfolio">
 	<li class="title">Work : sorted by topics</li>
 	<li class="active"><a href="#none" data-filter="*">All</a> <span>(123)</span></li>
-	<li><a href="#none" data-filter=".film">Film</a> <span>(9)</span></li>
-	<li><a href="#none" data-filter=".music">Music</a> <span>(22)</span></li>
+	<li><a href="#none" data-filter=".igirlxinhcom">Hot girl</a> <span>(9)</span></li>
+	<li><a href="#none" data-filter=".phototamtayvn">New hot girl</a> <span>(22)</span></li>
 	<li><a href="#none" data-filter=".art">Art</a> <span>(7)</span></li>
 	<li><a href="#none" data-filter=".social">Social</a> <span>(49)</span></li>
 </ul>

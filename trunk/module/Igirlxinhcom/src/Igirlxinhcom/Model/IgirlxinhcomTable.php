@@ -38,6 +38,41 @@ class IgirlxinhcomTable extends AbstractTableGateway
     	return $resultSet;
     }
     
+    public function fetchAllIgirlCom(Select $select = null) {
+    	 
+    	//return $select="asasasas";die;
+    	 
+    	if (null === $select)
+    		$select = new Select();
+    	$select->from('appsatellite');
+    	$conditions = array('appsatellite.nameapp = \'igirlxinhcom\'');
+    	$select->where($conditions);
+    	 
+    	$select->order('id DESC');
+    	$resultSet = $this->selectWith($select);
+    	//return $resultSet;die;
+    	$resultSet->buffer();
+    	return $resultSet;
+    }
+    
+    
+    public function fetchAllPhototamtay(Select $select = null) {
+    
+    	//return $select="asasasas";die;
+    
+    	if (null === $select)
+    		$select = new Select();
+    	$select->from('appsatellite');
+    	$conditions = array('appsatellite.nameapp = \'phototamtayvn\'');
+    	$select->where($conditions);
+    
+    	$select->order('id DESC');
+    	$resultSet = $this->selectWith($select);
+    	//return $resultSet;die;
+    	$resultSet->buffer();
+    	return $resultSet;
+    }
+    
     public function fetchAllIgirlxinhcom(Select $select = null) {
     	if (null === $select)
     		$select = new Select();

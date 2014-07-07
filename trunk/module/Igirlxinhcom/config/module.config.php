@@ -34,6 +34,8 @@ return array(
         ),
     		'template_map' => array(
     				'paginator-igirlxinhcom' => __DIR__ . '/../view/layout/slidePaginator.phtml',
+    				'paginatorhotgirl' => __DIR__ . '/../view/layout/Paginatorhotgirl.phtml',
+    				
     		),
     		'strategies' => array(
     				'ViewJsonStrategy',

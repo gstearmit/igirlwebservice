@@ -5,6 +5,7 @@ defined('WEB_PATH2') || define('WEB_PATH2','http://'.$_SERVER["HTTP_HOST"]);//ht
 
 
 defined('WEB_PATH_IMG') || define('WEB_PATH_IMG', WEB_PATH.'/images');
+defined('Page_Bottom_Issus_img') || define('Page_Bottom_Issus_img', WEB_PATH.'/Page_Bottom_Issus');
 defined('Upload_NEWS') || define('Upload_NEWS', WEB_PATH2.'/imagesupload');
 defined('APP_IMG') || define('APP_IMG', WEB_PATH2.'/imagesapp');
 defined('CKEDITOR_PATH') || define('CKEDITOR_PATH', WEB_PATH.'/plugins/ckeditor/ckeditor.js');

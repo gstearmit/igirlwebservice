@@ -30,7 +30,7 @@ class IgirlxinhcomController extends AbstractActionController {
 		$order = $this->params ()->fromRoute ( 'order' ) ? $this->params ()->fromRoute ( 'order' ) : Select::ORDER_ASCENDING;
 		$page = $this->params ()->fromRoute ( 'page' ) ? ( int ) $this->params ()->fromRoute ( 'page' ) : 1;
 		
-		$igirlxinhcoms = $this->getIgirlxinhcomTable ()->fetchAll ( $select->order ( $order_by . ' ' . $order ) );
+		$igirlxinhcoms = $this->getIgirlxinhcomTable ()->fetchAllIgirlCom( $select->order ( $order_by . ' ' . $order ) );
 		
 		//var_dump($igirlxinhcoms);die;
 		$itemsPerPage = 3;
@@ -47,6 +47,33 @@ class IgirlxinhcomController extends AbstractActionController {
 				'paginator' => $paginator 
 		) );
 	}
+	
+	public function hotnewgirlAction() {
+	
+		$select = new Select ();
+		$order_by = $this->params ()->fromRoute ( 'order_by' ) ? $this->params ()->fromRoute ( 'order_by' ) : 'id';
+		$order = $this->params ()->fromRoute ( 'order' ) ? $this->params ()->fromRoute ( 'order' ) : Select::ORDER_ASCENDING;
+		$page = $this->params ()->fromRoute ( 'page' ) ? ( int ) $this->params ()->fromRoute ( 'page' ) : 1;
+	
+		$igirlxinhcoms = $this->getIgirlxinhcomTable ()->fetchAllPhototamtay( $select->order ( $order_by . ' ' . $order ) );
+	
+		//var_dump($igirlxinhcoms);die;
+		$itemsPerPage = 3;
+	
+		$igirlxinhcoms->current ();
+		$paginator = new Paginator ( new paginatorIterator ( $igirlxinhcoms ) );
+		$paginator->setCurrentPageNumber ( $page )->setItemCountPerPage ( $itemsPerPage )->setPageRange ( 4 );
+	
+		return new ViewModel ( array (
+				// 'igirlxinhcoms' => $this->getIgirlxinhcomTable()->fetchAll(),
+				'order_by' => $order_by,
+				'order' => $order,
+				'page' => $page,
+				'paginator' => $paginator
+		) );
+	}
+	
+	
 	public function addAction() {
 		$form = new IgirlxinhcomForm ();
 		$form->get ( 'submit' )->setAttribute ( 'value', 'Add' );
@@ -119,6 +146,21 @@ class IgirlxinhcomController extends AbstractActionController {
 		return array (
 				'id' => $id,
 				'igirlxinhcom' => $this->getIgirlxinhcomTable ()->getIgirlxinhcom ( $id ) 
+		);
+	}
+	
+	public function readdetailAction()
+	{
+		$id = ( int ) $this->params ( 'id' );
+		if (! $id) {
+			return $this->redirect ()->toRoute ( 'igirlxinhcom' );
+		}
+	
+		$read = $this->getIgirlxinhcomTable()->getIgirlxinhid($id);
+		//$this->getManastoryTable ()->getReadManastory( $id ) ;
+		return array (
+				'id' => $id,
+				'readdetail' => $read,
 		);
 	}
 	

@@ -56,22 +56,19 @@
         </tr>
     <?php endforeach; ?>
 </table>
-<?php
-   echo $this->paginationControl(
-           $paginator, 'Sliding', 'page-template', array('order_by' => $order_by, 'order' => $order , 'search_by' => $search_by, 'pageAction' => $pageAction)
-   );
-
-
-    ?>
-
 */ ?>
 
 
 
+
+
+
  <div class="portfolio-wrapper">
-    <?php foreach ($paginator as $template) : ?>
+    <?php foreach ($paginator as $template) :
+          // if($template->image_thumbnail != '') {
+      ?>
  
-            <div class="card film art">
+            <div class="card <?php if($template->title == 'igirlxinhcom') {print 'Hot girl';} else {print "phototamtayvn";} ?> art">
               <a  href="#" class="thumb">
               <?php   if($template->image_thumbnail != '') {?>
                 <img src="<?php echo $template->image_thumbnail;  ?>" alt="" title="<?php echo $this->escapeHtml($template->title); ?>" />
@@ -87,13 +84,13 @@
               </div><!-- end card-body -->
               <div class="card-footer">
                 <ul class="list-inline filters">
-                  <li><a  href="#none">Film</a></li>
+                  <li><a  href="#none"> <?php if($template->title == 'igirlxinhcom') {print 'Hot girl';} else {print "phototamtayvn";} ?></a></li>
                   <li><a  href="#none">Art</a></li>
                 </ul>
               </div><!-- end card-footer -->
             </div><!-- end card -->
             
-            <div class="card music art">
+            <div class="card phototamtayvn art">
               <a  href="#" class="thumb">
               <?php if($template->image_thumbnail != '') {?>
                 <img src="<?php echo $template->image_thumbnail;  ?>" alt="" title="<?php echo $this->escapeHtml($template->title); ?>" />
@@ -109,13 +106,15 @@
               </div><!-- end card-body -->
               <div class="card-footer">
                 <ul class="list-inline filters">
-                  <li><a  href="#none">music</a></li>
+                  <li><a  href="#none"> <?php if($template->title == 'igirlxinhcom') {print 'Hot girl';} else {print "phototamtayvn";} ?></a></li>
                   <li><a  href="#none">Art</a></li>
                 </ul>
               </div><!-- end card-footer -->
             </div><!-- end card -->
-      <?php endforeach; ?>     
-            
+      <?php //}
+       endforeach; ?>   
+         
+      
             
             
             <?php /*?>
@@ -138,9 +137,13 @@
             </div><!-- end card -->
             
             */?>
-            
-          
-            
-            
-            
+     
   </div><!-- end portfolio-wrapper -->
+  
+   <?php
+   echo $this->paginationControl(
+           $paginator, 'Sliding', 'page-template', array('order_by' => $order_by, 'order' => $order , 'search_by' => $search_by, 'pageAction' => $pageAction)
+   );
+
+
+    ?>     

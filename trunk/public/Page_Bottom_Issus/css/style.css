@@ -1523,8 +1523,9 @@ text-align: center;
 .pagination-wrapper ul.pagination li span,
 .pagination-wrapper ul.pagination li a {
   margin: 0;
-  padding: 9px 12px;
+ /* padding: 9px 12px;
   line-height: 1.2;
+  */
   color: #fff;
   background: #1abc9c;
   border: none;

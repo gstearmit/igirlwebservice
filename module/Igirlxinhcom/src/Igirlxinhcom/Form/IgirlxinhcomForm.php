@@ -19,12 +19,12 @@ class IgirlxinhcomForm extends Form
         ));
 
         $this->add(array(
-            'name' => 'artist',
+            'name' => 'nameapp',
             'attributes' => array(
                 'type'  => 'text',
             ),
             'options' => array(
-                'label' => 'Artist',
+                'label' => 'nameapp',
             ),
         ));
 
@@ -37,6 +37,53 @@ class IgirlxinhcomForm extends Form
                 'label' => 'Title',
             ),
         ));
+        //link
+        $this->add(array(
+        		'name' => 'link',
+        		'attributes' => array(
+        				'type'  => 'text',
+        		),
+        		'options' => array(
+        				'label' => 'link',
+        		),
+        ));
+        
+        $this->add(array(
+        		'name' => 'image_thumbnail',
+        		'attributes' => array(
+        				'type'  => 'file',
+        				'required' => 'required',
+        		),
+        		'options' => array(
+        				'label' => 'image thumbnail',
+        		),
+        ));
+        
+        //content_detail
+        $this->add(array(
+        		'name' => 'content_detail',
+        		'attributes' => array(
+        				'type'  => 'textarea',
+        				//'required' => 'required',
+        		),
+        		'options' => array(
+        				'label' => 'Content detail',
+        		),
+        ));
+        
+        //content_detail_full
+        $this->add(array(
+        		'name' => 'content_detail_full',
+        		'attributes' => array(
+        				'type'  => 'textarea',
+        				//'required' => 'required',
+        		),
+        		'options' => array(
+        				'label' => 'Content detail full',
+        		),
+        ));
+        
+        
 
         $this->add(array(
             'name' => 'submit',

@@ -57,7 +57,6 @@ class IgirlxinhcomController extends AbstractActionController {
 	
 		$igirlxinhcoms = $this->getIgirlxinhcomTable ()->fetchAllPhototamtay( $select->order ( $order_by . ' ' . $order ) );
 	
-		//var_dump($igirlxinhcoms);die;
 		$itemsPerPage = 3;
 	
 		$igirlxinhcoms->current ();
@@ -71,6 +70,9 @@ class IgirlxinhcomController extends AbstractActionController {
 				'page' => $page,
 				'paginator' => $paginator
 		) );
+
+	
+		
 	}
 	
 	
@@ -82,9 +84,18 @@ class IgirlxinhcomController extends AbstractActionController {
 		if ($request->isPost ()) {
 			$igirlxinhcom = new Igirlxinhcom ();
 			$form->setInputFilter ( $igirlxinhcom->getInputFilter () );
-			$form->setData ( $request->getPost () );
+			$data = array_merge_recursive ( $this->getRequest ()->getPost ()->toArray (), $this->getRequest ()->getFiles ()->toArray () );
+				
+			$form->setData ( $data);
 			if ($form->isValid ()) {
-				$igirlxinhcom->exchangeArray ( $form->getData () );
+				
+								echo 'data';
+								echo '<pre>';
+								print_r($data);
+								echo '</pre>';
+								die;
+				
+				$igirlxinhcom->exchangeArray ( $data);
 				$this->getIgirlxinhcomTable ()->saveIgirlxinhcom ( $igirlxinhcom );
 				
 				// Redirect to list of igirlxinhcoms

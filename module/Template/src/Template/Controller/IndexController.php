@@ -39,7 +39,7 @@ class IndexController extends AbstractActionController
     	
     	$this->layout('layout/home');
     	return new ViewModel(array(
-    			//'action'=>'index',
+    			                'action'=>'index',
     			   				'order_by' => $order_by,
     			   				'order' => $order,
     			   				'page' => $page,
@@ -58,6 +58,14 @@ class IndexController extends AbstractActionController
 //     			// 'igirlxinhcoms' => $this->getIgirlxinhcomTable()->fetchAll(),
 //     			'igirlxinhcoms' => $igirlxinhcoms,
 //     	) );
+    }
+    
+    public function aboutAction()
+    {
+    	//die('about');
+
+    	    	$this->layout('layout/home');
+    	    	return new ViewModel(array('action'=>'about'));
     }
     
     public function magazinepublishAction()

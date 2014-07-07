@@ -13,7 +13,7 @@ return array(
 						'template' => array(
 								'type'    => 'segment',
 								'options' => array(
-										'route'    => '/template[/:action][/:action][/:id][/page/:page][/order_by/:order_by][/:order][/search_by/:search_by]',
+										'route'    => '/template[/:action][/:id][/page/:page][/order_by/:order_by][/:order][/search_by/:search_by]',
 										'constraints' => array(
 												'action' => '(?!\bpage\b)(?!\border_by\b)(?!\bsearch_by\b)[a-zA-Z][a-zA-Z0-9_-]*',
 												'id'     => '[0-9]+',
@@ -22,7 +22,7 @@ return array(
 												'order' => 'ASC|DESC',
 										),
 										'defaults' => array(
-												'controller' => 'Template\Controller\Template',
+												'controller' => 'Template\Controller\Index',
 												'action'     => 'index',
 										),
 								),

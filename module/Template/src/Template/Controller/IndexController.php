@@ -28,7 +28,7 @@ class IndexController extends AbstractActionController
    		
    		$igirlxinhcoms = $this->getTemplateTable()->fetchAllTemplate($select->order ( $order_by . ' ' . $order));
    		
-   		var_dump($igirlxinhcoms);
+   		//var_dump($igirlxinhcoms);
    		
    		$itemsPerPage = 3;
    		
@@ -36,18 +36,14 @@ class IndexController extends AbstractActionController
    		$paginator = new Paginator ( new paginatorIterator ( $igirlxinhcoms ) );
    		$paginator->setCurrentPageNumber ( $page )->setItemCountPerPage ( $itemsPerPage )->setPageRange ( 4 );
    		
-//    		return new ViewModel ( array (
-//    				// 'igirlxinhcoms' => $this->getIgirlxinhcomTable()->fetchAll(),
-//    				'order_by' => $order_by,
-//    				'order' => $order,
-//    				'page' => $page,
-//    				'paginator' => $paginator
-//    		) );
     	
     	$this->layout('layout/home');
     	return new ViewModel(array(
     			//'action'=>'index',
-    			'girlxinh'=>$arr,
+    			   				'order_by' => $order_by,
+    			   				'order' => $order,
+    			   				'page' => $page,
+    			   				'paginator' => $paginator
     	));
     }
     

@@ -195,7 +195,9 @@ class TemplateTable extends AbstractTableGateway
     	if (null === $select)
     	$select = new Select();
     	$select->from('appsatellite');
-    	$select->where(array('appsatellite.nameapp = \'igirlxinhcom\''));
+    	$conditions = array('appsatellite.nameapp = \'igirlxinhcom\'','appsatellite.nameapp = \'phototamtayvn\'');
+    	$select->where($conditions,\Zend\Db\Sql\Predicate\PredicateSet::OP_OR);
+    	
     	$select->order('id DESC');
     	$resultSet = $this->selectWith($select);
     	//return $resultSet;die;

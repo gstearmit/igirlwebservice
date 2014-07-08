@@ -13,8 +13,8 @@
 
 			<li class="title">Menu</li>
 			<li class="active"><a href="<?php echo WEB_PATH; ?>">Home</a></li>
-			<li><a href="<?php echo WEB_PATH. '/igirlxinhcom-rest';?>">igirlxinhcom</a></li>
-			<li><a href="<?php echo WEB_PATH. '/phototamtayvn-rest';?>">Phototamtay</a></li>
+			<li><a href="<?php echo WEB_PATH. '/template/index';?>">Hot girl</a></li>
+			<li><a href="<?php echo WEB_PATH. '/template/hotgirlnew';?>">Hot Girl New</a></li>
 			<li><a href="<?php echo WEB_PATH;?>/user/login">login</a></li>
 
 		</ul>

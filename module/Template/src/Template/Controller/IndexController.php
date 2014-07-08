@@ -60,6 +60,35 @@ class IndexController extends AbstractActionController
 //     	) );
     }
     
+    public function hotgirlAction()
+    {
+    	 $igirlxinhcoms = $this->getTemplateTable ()->fetchhotgirl();
+    	 
+//     	    	echo "<pre>";
+//     	    	print_r($igirlxinhcoms);
+//     	    	echo '</pre>';
+//     	    	die;
+    	 $this->layout('layout/home');
+    	    	return new ViewModel ( array (
+    			    			'igirlxinhcoms' => $igirlxinhcoms,
+    			    	) );
+  }
+  
+  public function hotgirlnewAction()
+  {
+  	$phototamtay = $this->getTemplateTable ()->fetchphototamtay();
+  
+  	//     	    	echo "<pre>";
+  	//     	    	print_r($phototamtay);
+  	//     	    	echo '</pre>';
+  	//     	    	die;
+  	$this->layout('layout/home');
+  	return new ViewModel ( array (
+  			'phototamtay' => $phototamtay,
+  	) );
+  }
+        
+        
     public function aboutAction()
     {
     	//die('about');

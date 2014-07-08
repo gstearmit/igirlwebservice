@@ -230,7 +230,60 @@ class TemplateTable extends AbstractTableGateway
     
     	return $array;
     }
-   
+    
+    
+    public function fetchhotgirl(Select $select = null) {
+    	if (null === $select)
+    	$sql = new Sql($this->adapter);
+    	$select = $sql->select();
+    	//$select->columns(array()); //,'idforeign'=>'idforeign'
+    	$select->from('appsatellite');
+    	$conditions = array('appsatellite.nameapp = \'igirlxinhcom\'');
+    	$select->where($conditions);
+    	$select->order('id DESC');
+    	 
+    	$selectString = $sql->prepareStatementForSqlObject($select);
+    
+    	//return $selectString ;die;
+    
+    	$results = $selectString->execute();
+    	// swap
+    	$array = array();
+    	foreach ($results as $result)
+    	{
+    		$array[] = $result;
+    	}
+    
+    	return $array;
+    }
+    
+    //$phototamtay
+    public function fetchphototamtay(Select $select = null) {
+    	if (null === $select)
+    		$sql = new Sql($this->adapter);
+    	$select = $sql->select();
+    	//$select->columns(array()); //,'idforeign'=>'idforeign'
+    	$select->from('appsatellite');
+    	$conditions = array('appsatellite.nameapp = \'phototamtayvn\'');
+    	$select->where($conditions);
+    	$select->order('id DESC');
+    
+    	$selectString = $sql->prepareStatementForSqlObject($select);
+    
+    	//return $selectString ;die;
+    
+    	$results = $selectString->execute();
+    	// swap
+    	$array = array();
+    	foreach ($results as $result)
+    	{
+    		$array[] = $result;
+    	}
+    
+    	return $array;
+    }
+    
+    
     public function fetch_All_Phototamtayvnrest_Rest_Orderbyiddesc(Select $select = null) {
     	if (null === $select)
     		$select = new Select();

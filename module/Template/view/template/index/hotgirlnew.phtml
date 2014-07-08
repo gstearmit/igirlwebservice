@@ -6,7 +6,7 @@
 ?>
 <div class="portfolio-wrapper">
     <?php foreach ($phototamtay as $key => $template) :
-          // if($template->image_thumbnail != '') {
+         if($template['image_thumbnail'] != '') {
       ?>
  
             <div class="card <?php if($template['title'] == 'igirlxinhcom') {print 'igirlxinhcom';} else {print "phototamtayvn";} ?> art">
@@ -14,14 +14,14 @@
               <?php   if($template['image_thumbnail'] != '') {?>
                 <img src="<?php echo $template['image_thumbnail'];  ?>" alt="" title="<?php echo $this->escapeHtml($template['title']); ?>" />
                 <?php }else { ?>
-                    <img src="<?php echo $basepathview; ?>img/sample/elephants-dream/imgdefault.jpg" alt="" title="" />
+                    <img src="<?php echo Page_Bottom_Issus_img; ?>/img/sample/elephants-dream/imgdefault.jpg" alt="" title="" />
                 <?php }?>
                 <span class="overlay"><span class="fa fa-search"></span></span>
               </a>
               <div class="card-body">
                 <h2><a  href="#"><?php echo $this->escapeHtml($template['content_detail']); ?></a></h2>
-                <p><?php echo $this->escapeHtml($template['title']); ?></p>
-                <p><a  href="#">Read More</a></p>
+                <p><?php //echo $this->escapeHtml($template['title']); ?></p>
+                <p><a  href="<?php echo WEB_PATH. '/template/detail/'.$template['id'] ?>">Read More</a></p>
               </div><!-- end card-body -->
               <div class="card-footer">
                 <ul class="list-inline filters">
@@ -31,7 +31,7 @@
               </div><!-- end card-footer -->
             </div><!-- end card -->
          
-      <?php //}
+      <?php }
        endforeach; ?>   
          
       

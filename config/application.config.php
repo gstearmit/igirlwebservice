@@ -10,7 +10,7 @@ defined('Upload_NEWS') || define('Upload_NEWS', WEB_PATH2.'/imagesupload');
 defined('APP_IMG') || define('APP_IMG', WEB_PATH2.'/imagesapp');
 defined('CKEDITOR_PATH') || define('CKEDITOR_PATH', WEB_PATH.'/plugins/ckeditor/ckeditor.js');
 defined('Thumb_')|| define('Thumb_', WEB_PATH_IMG . '/thumb_/thumb_');
-// defined('Default_img')|| define('Thumb_', WEB_PATH_IMG . '/thumb_/thumb_');
+defined('Default_img')|| define('Thumb_', WEB_PATH_IMG . '/thumb_/thumb_');
 
 return array(
     'modules' => array(

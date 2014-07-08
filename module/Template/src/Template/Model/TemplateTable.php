@@ -283,6 +283,31 @@ class TemplateTable extends AbstractTableGateway
     	return $array;
     }
     
+    //$phototamtay
+    public function fetchgetid($id) {
+    	$id = (int) $id;
+    	$sql = new Sql($this->adapter);
+    	$select = $sql->select();
+    	$select->columns(array('src'=>'src')); //,'idforeign'=>'idforeign'
+    	$select->from ('contentdetailfull')
+    	->join('appsatellite', 'contentdetailfull.idforeign= appsatellite.id',array()); //array('id'=>'id','nameapp'=>'nameapp','title'=>'title','link'=>'link','image_thumbnail'=>'image_thumbnail','content_detail'=>'content_detail','content_detail_full'=>'content_detail_full')
+    
+    	$select->where(array('contentdetailfull.idforeign'=>$id));
+    	$selectString = $sql->prepareStatementForSqlObject($select);
+    	 
+    	//return $selectString ;die;
+    	 
+    	$results = $selectString->execute();
+    	// swap
+    	$array = array();
+    	foreach ($results as $result)
+    	{
+    		$array[] = $result;
+    	}
+    
+    	return $array;
+    }
+    
     
     public function fetch_All_Phototamtayvnrest_Rest_Orderbyiddesc(Select $select = null) {
     	if (null === $select)

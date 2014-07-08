@@ -87,8 +87,21 @@ class IndexController extends AbstractActionController
   			'phototamtay' => $phototamtay,
   	) );
   }
-        
-        
+   //detail     
+  public function detailAction()
+  {
+  	$id = ( int ) $this->params ()->fromRoute ( 'id');
+  	$phototamtay = $this->getTemplateTable ()->fetchgetid($id);
+  
+//   	    	    	echo "<pre>";
+//   	    	    	print_r($phototamtay);
+//   	    	    	echo '</pre>';
+//   	    	    	die;
+  	$this->layout('layout/home');
+  	return new ViewModel ( array (
+  			'phototamtay' => $phototamtay,
+  	) );
+  }    
     public function aboutAction()
     {
     	//die('about');

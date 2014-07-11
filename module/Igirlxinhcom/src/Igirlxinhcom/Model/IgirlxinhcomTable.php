@@ -134,7 +134,7 @@ class IgirlxinhcomTable extends AbstractTableGateway
     	$id = (int) $id;
     	$sql = new Sql($this->adapter);
     	$select = $sql->select();
-    	$select->columns(array('src'=>'src')); //,'idforeign'=>'idforeign'
+    	$select->columns(array('id'=>'id','src'=>'src')); //,'idforeign'=>'idforeign'
     	$select->from ('contentdetailfull')
     	->join('appsatellite', 'contentdetailfull.idforeign= appsatellite.id',array()); //array('id'=>'id','nameapp'=>'nameapp','title'=>'title','link'=>'link','image_thumbnail'=>'image_thumbnail','content_detail'=>'content_detail','content_detail_full'=>'content_detail_full')
     

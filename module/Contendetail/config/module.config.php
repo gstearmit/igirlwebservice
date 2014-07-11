@@ -34,5 +34,8 @@ return array(
         'template_map' => array(
             'page-contendetail' => __DIR__ . '/../view/layout/slidePaginator.phtml',
         ),
+    		'strategies' => array(
+    				'ViewJsonStrategy',
+    		),
     ),
 );

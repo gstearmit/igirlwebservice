@@ -22,6 +22,8 @@ use ZfcUser\Options\UserControllerOptionsInterface;
 use Zend\Validator\File\Size;
 use Zend\Validator\File\Extension;
 
+use Zend\View\Model\JsonModel;
+
 class ContendetailController extends AbstractActionController {
 
     protected $contendetailTable;
@@ -101,6 +103,34 @@ class ContendetailController extends AbstractActionController {
                 ));
     }
     
+    public function ajaxdetailAction(){
+     
+    	$text = $_POST;
+    	if(isset($_POST['id']) and isset($_POST['src']) and isset($_POST['idforeign'] ))
+    	{
+    		$arrayDetail = array(
+	    			'id'=>(int)$_POST['id'],
+	    			'src'=>$_POST['src'],
+    				'idforeign'=>$_POST['idforeign'], // id save 
+    		);
+    		
+    		$dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+    		$contendetail = new Contendetail();
+    		$renname_file_img = $this->uploadImageAlatca($_POST['src']);
+    		$contendetail->dataArraySwap($arrayDetail,WEB_PATH_IMG.'/'.$renname_file_img);
+    		$resultsave = $this->getContendetailTable()->saveContendetail($contendetail);
+    		if($resultsave > 0){ $text = "successfully processed";} else {$text = "False";}
+    		
+    	}
+    	$result = new JsonModel ( array (
+    	      'result' =>$resultsave
+    	) );
+    	
+    	return $result;
+    }
+    
+    
+    
     public function pationAction() {
     	// check login
     	//     	if (!$this->zfcUserAuthentication()->hasIdentity()) {
@@ -130,6 +160,10 @@ class ContendetailController extends AbstractActionController {
     	if ($id == 0) {
     		return $this->redirect()->toRoute('igirlxinhcom');
     	}
+    	$ig = (int)$this->params()->fromRoute('ig');
+    	
+    	
+    	
     	$dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
     
         $form = new ContendetailForm($dbAdapter,$id); // include Form Class

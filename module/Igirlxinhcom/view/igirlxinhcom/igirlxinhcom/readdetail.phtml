@@ -1,16 +1,76 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style>
-
 ul.action_admin li {
-float: left;
-list-style: none;
-padding: 0px 5px 0px 0px;
-}
-ul.action_admin {
-display: inline-block;
+	float: left;
+	list-style: none;
+	padding: 0px 5px 0px 0px;
 }
 
+ul.action_admin {
+	display: inline-block;
+}
 </style>
+
+<script>
+
+// var url = document.getElementById('urlaction').value;
+// var id = document.getElementById('id').value;
+// var idforeign = document.getElementById('idforeign').value;
+// var src = document.getElementById('src').value;
+
+// // var myData = {"url":url,"id":id,"idforeign":idforeign,"src":src };
+// alert(url);
+// alert(id);
+// alert(idforeign);
+// alert(src);
+
+function divFunction(){
+	alert("submitbutton click"); 
+    $(document).ready(function() {
+	        var lol = $('#lolz');
+	        
+	        var url = $('#urlaction').val();
+		    var id = $('#id').val();
+		    var idforeign = $('#idforeign').val();
+		    var src = $('#src').val();
+		    
+		   // var myData = {"url":url,"id":id,"idforeign":idforeign,"src":src };
+		    alert(url);
+		    alert(id);
+		    alert(idforeign);
+		    alert(src);
+		    
+		    
+		    
+		    //alert(myData);
+		    return 0;
+		    $.ajax({
+	            type:"POST",
+	            url:"/example/answer",
+	            data:myData,
+	            success: function(data){
+	                                   //The callback function, that is going to be executed 
+	                                   //after the server response. data is the data returned
+	                                   //from the server.
+
+	                                   // Show the returned text
+	                                   $("#answer").text(data.text);
+
+
+	                                    },
+	           // failure(function(){alert("Failure!!");})
+
+
+	           });
+	    });
+     
+}
+
+
+
+</script>
+
+
 <?php
 // echo '<pre>';
 // print_r($this->readdetail) ;
@@ -19,27 +79,94 @@ display: inline-block;
 
 
 <?php
-if (is_array($this->readdetail) and !empty($this->readdetail))
- {
-	foreach ($this->readdetail as $key => $new)
-	{
-        ?>
-        <h1><?php echo $new['title'];?></h1>
-        <div><img alt="" src="<?php echo $new['src'];?>"></div>
-		<p><strong><?php echo $new['description'];?></strong></p>
-		<div style="display: none;"><?php echo $new['page'];?></div>
-		<ul class="action_admin">
-		  <li> <a class="btn  btn-mini  " href="<?php echo WEB_PATH ?>/contendetail/edit/<?php echo $igirlxinhcom->id?>">Edit</a> </li>
-		  <li><a class="btn  btn-mini  " href="<?php echo WEB_PATH ?>/contendetail/delete/<?php echo $igirlxinhcom->id?>">Delete</a></li>
-		  <li><a class="btn  btn-mini  " href="<?php echo WEB_PATH ?>/contendetail/commnet/<?php echo $igirlxinhcom->id?>">Commnet</a></li>
-       
-        </ul>
+$igirl_id = $this->igirl_id;
+if (is_array ( $this->readdetail ) and ! empty ( $this->readdetail )) {
+	foreach ( $this->readdetail as $key => $detail ) {
+		
+		?>
+<h1><?php echo $detail['title'];?></h1>
+<div>
+	<img alt="" src="<?php echo $detail['src'];?>">
+</div>
+<p>
+	<strong><?php echo $detail['description'];?></strong>
+</p>
+<div style="display: none;"><?php echo $detail['page'];?></div>
+<ul class="action_admin">
+	<li><a class="btn  btn-mini  "
+		href="<?php echo WEB_PATH ?>/contendetail/edit/<?php echo $detail['id'].'/ig/'.$this->id?>">Edit</a>
+	</li>
+	<li><a href="#myModal" role="button" class="btn" data-toggle="modal">Add
+			Modol</a></li>
+	<li><a class="btn  btn-mini  "
+		href="<?php echo WEB_PATH ?>/contendetail/add/<?php echo $detail['id'].'/ig/'.$this->id?>">Add</a>
+	</li>
+	<li><a class="btn  btn-mini  "
+		href="<?php echo WEB_PATH ?>/contendetail/delete/<?php echo $detail['id'].'/ig/'.$this->id;?>">Delete</a></li>
+	<li><a class="btn  btn-mini  "
+		href="<?php echo WEB_PATH ?>/commnet/commnet/<?php echo $detail['id'];?>">Commnet</a></li>
 
-		<?php
+</ul>
+
+<?php
 	}
-}else 
-{
-	die("Not Found Record ! ");
+} else {
+	die ( "Not Found Record ! " );
 }
 
 ?>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true">×</button>
+		<h3 id="myModalLabel">Add New</h3>
+	</div>
+	<div class="modal-body">
+		<div class="containerRT">
+
+		<?php 
+		/*
+			<form action="/contendetail/add/ig<?php echo $this->id;?>" method="post" name="contendetail" enctype="multipart/form-data"
+				id="contendetail">
+				<input name="id" type="hidden" value=""> <input name="idforeign"
+					type="hidden" value="<?php echo $this->id;?>"> <label><span>Upload
+						images</span><input name="src" type="file" required="required"></label>
+				<input name="submit" type="submit" id="submitbutton"
+					class="btn btn-primary" value="Add">
+			</form>
+		 */
+		 ?>	
+			
+			<div name="contendetail"  id="contendetail">
+			    <input type="hidden" name ="urlaction" id="urlaction" value="<?php echo WEB_PATH ?>/contendetail/add/<?php echo $detail['id'].'/ig/'.$this->id?>">
+				<input name="id" id="id" type="hidden" value=""> 
+				<input name="idforeign" id="idforeign" type="hidden" value="<?php echo $this->id;?>"> 
+				<label><span>Upload images</span>
+				 <input name="src" id="src" type="file" required="required">
+				 </label>
+				 
+			
+			</div>
+	<?php /*?>		
+			<script type="text/javascript" src="http://127.0.0.1:1917/plugins/ckeditor/ckeditor.js"></script>
+			<script type="text/javascript">
+		CKEDITOR.replace( 'description', {
+			width: "900px",
+			height: "300px",
+			toolbar: "Full"
+		} );
+		</script>
+		*/ ?>
+		
+		</div>
+		<!-- class="container" -->
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+		<button class="btn btn-primary" onClick="divFunction()">Save Add new</button>
+	</div>
+</div>

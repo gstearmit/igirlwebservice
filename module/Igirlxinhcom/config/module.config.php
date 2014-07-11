@@ -11,7 +11,7 @@ return array(
             'igirlxinhcom' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/igirlxinhcom[/:action][/:action][/:id][/page/:page][/order_by/:order_by][/:order][/search_by/:search_by]',
+                    'route'    => '/igirlxinhcom[/:action][/:id][/page/:page][/order_by/:order_by][/:order][/search_by/:search_by]',
                     'constraints' => array(
             						'action' => '(?!\bpage\b)(?!\border_by\b)(?!\bsearch_by\b)[a-zA-Z][a-zA-Z0-9_-]*',
             						'id'     => '[0-9]+',

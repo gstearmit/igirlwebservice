@@ -73,6 +73,7 @@ return array(
     	'Apphaivlcomrest',
     	'Appzf2rest',
         'Appmincecraftrest',
+		'Contendetail',
     	//'Wattpad',
     	'Hamtruyencom',
     	'Chapter',

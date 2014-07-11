@@ -110,14 +110,15 @@ class ContendetailTable extends AbstractTableGateway {
 
     public function saveContendetail(Contendetail $contendetail) {
         $data = array(
-            'idforeign' => $contendetail->idmz,
-        	'src' => $contendetail->img,
+            'idforeign' => $contendetail->idforeign,
+        	'src' => $contendetail->src,
         );
         
 
         $id = (int) $contendetail->id;
         if ($id == 0) {
             $this->insert($data);
+            return $this->lastInsertValue;
         } else {
             if ($this->getContendetail($id)) {
                 $this->update($data, array('id' => $id));

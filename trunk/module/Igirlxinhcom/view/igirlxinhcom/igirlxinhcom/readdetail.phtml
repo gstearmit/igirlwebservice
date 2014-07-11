@@ -9,56 +9,115 @@ ul.action_admin li {
 ul.action_admin {
 	display: inline-block;
 }
+
+.circle1 {
+    background-color: rgba(0,0,0,0);
+    border: 5px solid rgba(0,183,229,0.9);
+    opacity: .9;
+    border-left: 5px solid rgba(0,0,0,0);
+    border-right: 5px solid rgba(0,0,0,0);
+    border-radius: 50px;
+    box-shadow: 0 0 15px #2187e7;
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+    position: relative;
+    top: -50px;
+    -moz-animation: spinoffPulse 1s infinite linear;
+    -webkit-animation: spinoffPulse 1s infinite linear;
+}
+
+@-moz-keyframes spinPulse {
+    0% {
+        -moz-transform: rotate(160deg);
+        opacity: 0;
+        box-shadow: 0 0 1px #2187e7;
+    }
+
+    50% {
+        -moz-transform: rotate(145deg);
+        opacity: 1;
+    }
+
+    100% {
+        -moz-transform: rotate(-320deg);
+        opacity: 0;
+    };
+}
+
+@-moz-keyframes spinoffPulse {
+    0% {
+        -moz-transform: rotate(0deg);
+    }
+
+    100% {
+        -moz-transform: rotate(360deg);
+    };
+}
+
+@-webkit-keyframes spinPulse {
+    0% {
+        -webkit-transform: rotate(160deg);
+        opacity: 0;
+        box-shadow: 0 0 1px #2187e7;
+    }
+
+    50% {
+        -webkit-transform: rotate(145deg);
+        opacity: 1;
+    }
+
+    100% {
+        -webkit-transform: rotate(-320deg);
+        opacity: 0;
+    };
+}
+
+@-webkit-keyframes spinoffPulse {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    };
+}
 </style>
 
 <script>
-
-// var url = document.getElementById('urlaction').value;
-// var id = document.getElementById('id').value;
-// var idforeign = document.getElementById('idforeign').value;
-// var src = document.getElementById('src').value;
-
-// // var myData = {"url":url,"id":id,"idforeign":idforeign,"src":src };
-// alert(url);
-// alert(id);
-// alert(idforeign);
-// alert(src);
-
 function divFunction(){
-	alert("submitbutton click"); 
+	//alert("submitbutton click"); 
     $(document).ready(function() {
-	        var lol = $('#lolz');
-	        
 	        var url = $('#urlaction').val();
 		    var id = $('#id').val();
+		    var ig = $('#ig').val();
 		    var idforeign = $('#idforeign').val();
 		    var src = $('#src').val();
+		    var myData = {"url":url,"id":id,"ig":ig,"idforeign":idforeign,"src":src };
 		    
-		   // var myData = {"url":url,"id":id,"idforeign":idforeign,"src":src };
-		    alert(url);
-		    alert(id);
-		    alert(idforeign);
-		    alert(src);
+// 		    alert(url);
+// 		    alert(id);
+// 		    alert(idforeign);
+// 		    alert(src);
 		    
-		    
-		    
-		    //alert(myData);
-		    return 0;
+// 		    //alert(myData);
+		   // return 0;
+		   $("#circle1").show();
+		   $("#myModal").removeClass("in");
+		   $("#myModal").removeAttr("aria-hidden");
+		   $("#myModal").show();
+		   
 		    $.ajax({
 	            type:"POST",
-	            url:"/example/answer",
+	            url:url,
 	            data:myData,
 	            success: function(data){
-	                                   //The callback function, that is going to be executed 
-	                                   //after the server response. data is the data returned
-	                                   //from the server.
-
-	                                   // Show the returned text
-	                                   $("#answer").text(data.text);
-
-
+	            	 $("#circle1").hide();
+	            	          console.log(data);
 	                                    },
-	           // failure(function(){alert("Failure!!");})
+	            error: function (data) {
+	                                        console.log(data);
+	                                    }
 
 
 	           });
@@ -116,7 +175,7 @@ if (is_array ( $this->readdetail ) and ! empty ( $this->readdetail )) {
 
 ?>
 
-
+<div class="circle1"></div>
 <!-- Modal -->
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
@@ -128,29 +187,15 @@ if (is_array ( $this->readdetail ) and ! empty ( $this->readdetail )) {
 	<div class="modal-body">
 		<div class="containerRT">
 
-		<?php 
-		/*
-			<form action="/contendetail/add/ig<?php echo $this->id;?>" method="post" name="contendetail" enctype="multipart/form-data"
-				id="contendetail">
-				<input name="id" type="hidden" value=""> <input name="idforeign"
-					type="hidden" value="<?php echo $this->id;?>"> <label><span>Upload
-						images</span><input name="src" type="file" required="required"></label>
-				<input name="submit" type="submit" id="submitbutton"
-					class="btn btn-primary" value="Add">
-			</form>
-		 */
-		 ?>	
-			
 			<div name="contendetail"  id="contendetail">
-			    <input type="hidden" name ="urlaction" id="urlaction" value="<?php echo WEB_PATH ?>/contendetail/add/<?php echo $detail['id'].'/ig/'.$this->id?>">
+			    <input type="hidden" name ="urlaction" id="urlaction" value="<?php echo WEB_PATH ?>/contendetail/ajaxdetail/<?php echo $detail['id'].'/ig/'.$this->id?>">
 				<input name="id" id="id" type="hidden" value=""> 
+				<input name="ig" id="ig" type="hidden" value="<?php echo $this->id;?>"> 
 				<input name="idforeign" id="idforeign" type="hidden" value="<?php echo $this->id;?>"> 
 				<label><span>Upload images</span>
 				 <input name="src" id="src" type="file" required="required">
 				 </label>
-				 
-			
-			</div>
+			</div><!-- name="contendetail"  id="contendetail" -->
 	<?php /*?>		
 			<script type="text/javascript" src="http://127.0.0.1:1917/plugins/ckeditor/ckeditor.js"></script>
 			<script type="text/javascript">

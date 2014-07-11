@@ -10,7 +10,7 @@
       ?>
  
             <div class="card <?php if($template['title'] == 'igirlxinhcom') {print 'igirlxinhcom';} else {print "phototamtayvn";} ?> art">
-              <a  href="#" class="thumb">
+              <a  href="<?php echo WEB_PATH. '/template/detail/'.$template['id'] ?>" class="thumb">
               <?php   if($template['image_thumbnail'] != '') {?>
                 <img src="<?php echo $template['image_thumbnail'];  ?>" alt="" title="<?php echo $this->escapeHtml($template['title']); ?>" />
                 <?php }else { ?>
@@ -19,7 +19,7 @@
                 <span class="overlay"><span class="fa fa-search"></span></span>
               </a>
               <div class="card-body">
-                <h2><a  href="#"><?php echo $this->escapeHtml($template['content_detail']); ?></a></h2>
+                <h2><a  href="<?php echo WEB_PATH. '/template/detail/'.$template['id'] ?>"><?php echo $this->escapeHtml($template['content_detail']); ?></a></h2>
                 <p><?php //echo $this->escapeHtml($template['title']); ?></p>
                 <p><a  href="<?php echo WEB_PATH. '/template/detail/'.$template['id'] ?>">Read More</a></p>
               </div><!-- end card-body -->

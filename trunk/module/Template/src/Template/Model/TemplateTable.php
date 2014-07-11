@@ -260,13 +260,17 @@ class TemplateTable extends AbstractTableGateway
     //$phototamtay
     public function fetchphototamtay(Select $select = null) {
     	if (null === $select)
-    		$sql = new Sql($this->adapter);
+    		$limit = 1;
+    	$sql = new Sql($this->adapter);
+    	
     	$select = $sql->select();
     	//$select->columns(array()); //,'idforeign'=>'idforeign'
     	$select->from('appsatellite');
     	$conditions = array('appsatellite.nameapp = \'phototamtayvn\'');
+    	//$sql = "id >= (SELECT FLOOR( MAX(id) * RAND()) FROM `appsatellite` )";
+    	$rand = new \Zend\Db\Sql\Expression('RAND()');
     	$select->where($conditions);
-    	$select->order('id DESC');
+    	$select->order($rand);
     
     	$selectString = $sql->prepareStatementForSqlObject($select);
     
@@ -290,7 +294,7 @@ class TemplateTable extends AbstractTableGateway
     	$select = $sql->select();
     	$select->columns(array('src'=>'src')); //,'idforeign'=>'idforeign'
     	$select->from ('contentdetailfull')
-    	->join('appsatellite', 'contentdetailfull.idforeign= appsatellite.id',array()); //array('id'=>'id','nameapp'=>'nameapp','title'=>'title','link'=>'link','image_thumbnail'=>'image_thumbnail','content_detail'=>'content_detail','content_detail_full'=>'content_detail_full')
+    	->join('appsatellite', 'contentdetailfull.idforeign= appsatellite.id',array('title'=>'title','content_detail'=>'content_detail')); //array('id'=>'id','nameapp'=>'nameapp','title'=>'title','link'=>'link','image_thumbnail'=>'image_thumbnail','content_detail'=>'content_detail','content_detail_full'=>'content_detail_full')
     
     	$select->where(array('contentdetailfull.idforeign'=>$id));
     	$selectString = $sql->prepareStatementForSqlObject($select);

@@ -78,10 +78,10 @@ class IndexController extends AbstractActionController
   {
   	$phototamtay = $this->getTemplateTable ()->fetchphototamtay();
   
-  	//     	    	echo "<pre>";
-  	//     	    	print_r($phototamtay);
-  	//     	    	echo '</pre>';
-  	//     	    	die;
+//   	    	    	echo "<pre>";
+//   	    	    	print_r($phototamtay);
+//   	    	    	echo '</pre>';
+//   	    	    	die;
   	$this->layout('layout/home');
   	return new ViewModel ( array (
   			'phototamtay' => $phototamtay,

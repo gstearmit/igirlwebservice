@@ -1,4 +1,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+
+ul.action_admin li {
+float: left;
+list-style: none;
+padding: 0px 5px 0px 0px;
+}
+ul.action_admin {
+display: inline-block;
+}
+
+</style>
 <?php
 // echo '<pre>';
 // print_r($this->readdetail) ;
@@ -16,6 +28,13 @@ if (is_array($this->readdetail) and !empty($this->readdetail))
         <div><img alt="" src="<?php echo $new['src'];?>"></div>
 		<p><strong><?php echo $new['description'];?></strong></p>
 		<div style="display: none;"><?php echo $new['page'];?></div>
+		<ul class="action_admin">
+		  <li> <a class="btn  btn-mini  " href="<?php echo WEB_PATH ?>/contendetail/edit/<?php echo $igirlxinhcom->id?>">Edit</a> </li>
+		  <li><a class="btn  btn-mini  " href="<?php echo WEB_PATH ?>/contendetail/delete/<?php echo $igirlxinhcom->id?>">Delete</a></li>
+		  <li><a class="btn  btn-mini  " href="<?php echo WEB_PATH ?>/contendetail/commnet/<?php echo $igirlxinhcom->id?>">Commnet</a></li>
+       
+        </ul>
+
 		<?php
 	}
 }else 

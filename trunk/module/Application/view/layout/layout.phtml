@@ -1,19 +1,4 @@
 <?php echo $this->doctype(); ?>
-<?php 
-// $dbAdapter = $this->adapter;
-// $sql       = 'SELECT * FROM catalogue JOIN magazinepublish  ON catalogue.id=magazinepublish.patient_id';
-// $statement = $dbAdapter->query($sql);
-// $result    = $statement->execute();
-
-// $selectData = array();
-
-// foreach ($result as $res) {
-// 	$selectData[$res['patient_id']] = $res['id'];
-// }
-// var_dump($selectData) ;
-
-?>
-
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -40,12 +25,18 @@ echo $this->headLink ( array (
 				
 echo $this->headScript ()->appendFile ( $this->basePath () . '/js/html5.js', 'text/javascript', array (
 						'conditional' => 'lt IE 9' 
-				) )->appendFile ( $this->basePath () . '/js/jquery.min.js' )->appendFile ( $this->basePath () . '/js/bootstrap.js' );
+				) )->appendFile ( $this->basePath () . '/js/jquery.min.js' )->appendFile ( $this->basePath () . '/js/bootstrap.js' )->appendFile ( $this->basePath () . '/js/bootstrap-alert.js' );
 				?>
                                   
                                   
-      <script type="text/javascript" language="javascript">
-	$(document).ready(function() {		
+  <script type="text/javascript" language="javascript">
+	$(document).ready(function() {	
+		//alert("hoang phuc");
+		$("#loadingRT").hide();
+		$("#loading").hide();
+		$("#loading1").hide();
+		 $("#circle1").hide();// hidden load ajax
+		 $(".alert").hide();
 		//alert('cho them vao');
 		$("#thumbnail img").hover(function(e){
 			$("#large").css("top",(e.pageY+5)+"px")
@@ -55,6 +46,8 @@ echo $this->headScript ()->appendFile ( $this->basePath () . '/js/html5.js', 'te
 		}, function(){
 			$("#large").fadeOut("fast");
 		});		
+
+		
 		
 	});
 </script>

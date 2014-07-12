@@ -80,6 +80,7 @@ return array(
 		'Igirlxinhcom',
 		'Igirlxinhcomrest',
 		'Phototamtayvnrest',
+		'Comments',
 		
 		
     ),
